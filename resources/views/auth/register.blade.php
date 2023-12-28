@@ -21,7 +21,7 @@
                                     <input id="name" type="text"
                                         class="form-control @error('name') is-invalid
                                     @enderror"
-                                        name="name" autofocus>
+                                        name="name" spellcheck="false" autocomplete="off" autofocus>
                                     @error('name')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -34,7 +34,7 @@
                                     <input id="email" type="email"
                                         class="form-control @error('email') is-invalid
                                     @enderror"
-                                        name="email">
+                                        name="email" spellcheck="false" autocomplete="off">
                                     @error('email')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -70,6 +70,9 @@
                                 </div>
                             </form>
                         </div>
+                    </div>
+                    <div class="mt-5 text-muted text-center">
+                        Already have an account? <a href="{{route('login')}}">Log in</a>
                     </div>
                     <div class="simple-footer">
                         Copyright &copy; Stisla 2018

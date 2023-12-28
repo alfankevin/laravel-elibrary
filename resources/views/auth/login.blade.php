@@ -22,7 +22,7 @@
                                         <input id="email" type="email"
                                             class="form-control @error('email') is-invalid
                                         @enderror"
-                                            name="email" tabindex="1" autofocus spellcheck="false" autocomplete="off">
+                                            name="email" tabindex="1" spellcheck="false" autocomplete="off" autofocus>
                                         <div class="invalid-feedback">
                                             Please fill in your email
                                         </div>
