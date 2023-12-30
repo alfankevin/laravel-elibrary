@@ -11,7 +11,7 @@
     <li class="{{ request()->is('book') ? 'active' : '' }}"><a class="nav-link" href="{{ route('book.index') }}"><i class="fas fa-list"></i>
             <span>Book List</span></a>
     </li>
-    <li class="{{ request()->is('category') ? 'active' : '' }}"><a class="nav-link" href="{{ route('book.index') }}"><i class="fas fa-list"></i>
+    <li class="{{ request()->is('category') ? 'active' : '' }}"><a class="nav-link" href="{{ route('category.index') }}"><i class="fas fa-list"></i>
             <span>Category</span></a>
     </li>
     <li class=""><a class="nav-link" href="{{ route('main') }}"><i class="fas fa-arrow-left"></i>

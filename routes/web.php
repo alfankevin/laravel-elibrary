@@ -1,7 +1,9 @@
 <?php
 
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,4 +37,6 @@ Route::middleware(['auth', 'admin'])->group(function(){
         return view('admin.admin');
     })->name('admin');
     Route::resource('book', BookController::class);
+    Route::resource('category', CategoryController::class);
+    Route::post('/category/edit', [CategoryController::class, 'ubah'])->name('category.edit');
 });
