@@ -14,8 +14,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $data = Category::orderByDesc('id_category')->get();
-        return view('admin.pages.category', compact('data'));
+        $category = Category::where('id_category', '!=', 1)->orderByDesc('id_category')->get();
+        return view('admin.pages.category', compact('category'));
     }
 
     /**
@@ -56,7 +56,7 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function ubah(Request $request)
+    public function update(Request $request)
     {
         $id_category = $request['id_category'];
         $category = $request['category'];

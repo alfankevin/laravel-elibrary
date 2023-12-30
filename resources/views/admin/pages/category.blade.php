@@ -23,16 +23,16 @@
                         
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered table-md" id="book">
-                                    <thead>
+                                <table class="table table-bordered table-md">
+                                    <thead style="border-bottom: 1px solid #ddd">
                                         <tr>
                                             <th>No</th>
                                             <th>Category</th>
-                                            <th class="text-right">Aksi</th>
+                                            <th class="text-right">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($data as $key => $item)
+                                        @foreach ($category as $key => $item)
                                             <tr>
                                                 <td>{{ $key + 1 }}</td>
                                                 <td>{{ $item->category }}</td>
@@ -72,8 +72,7 @@
                     <h5 class="modal-title" id="exampleModalLongTitle">Add Category</h5>
                 </div>
                 <div class="modal-body">
-                    {{-- <form action="{{ route('category.store') }}" method="post"> --}}
-                    <form action="" method="post">
+                    <form id="createForm" action="{{ route('category.store') }}" method="post">
                         @csrf
                         <div class="form-group m-0">
                             <label for="category">Category Name</label>
@@ -87,7 +86,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-light" data-dismiss="modal" onclick="resetForm()">Cancel</button>
                         <button class="btn btn-primary">Create</button>
                     </div>
                 </form>
@@ -135,6 +134,9 @@
             $("#id_category").val(id);
             $("#category2").val(name);
         });
+        function resetForm() {
+            document.getElementById("createForm").reset();
+        }
     </script>
     <script src="/assets/js/select2.min.js"></script>
 @endpush

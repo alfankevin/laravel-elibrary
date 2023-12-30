@@ -38,5 +38,6 @@ Route::middleware(['auth', 'admin'])->group(function(){
     })->name('admin');
     Route::resource('book', BookController::class);
     Route::resource('category', CategoryController::class);
-    Route::post('/category/edit', [CategoryController::class, 'ubah'])->name('category.edit');
+    Route::post('/book/edit', [BookController::class, 'update'])->name('book.edit');
+    Route::post('/category/edit', [CategoryController::class, 'update'])->name('category.edit');
 });

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>@yield('title')</title>
+    <title>Admin Page</title>
 
     <!-- General CSS Files -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -13,7 +13,9 @@
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
     <!-- CSS Libraries -->
+    <link rel="stylesheet" href="{{ asset('assets/css/select.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/dataTables.bootstrap4.min.css') }}">
+
     @stack('customStyle')
 
     <!-- Template CSS -->
@@ -56,20 +58,22 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <script src="/assets/js/stisla.js"></script>
+    <script src="{{ asset('assets/js/stisla.js') }}"></script>
 
     <!-- JS Libraies -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="/assets/js/page/modules-sweetalert.js"></script>
-    <script src="/assets/js/dataTables.min.js"></script>
-    <script src="/assets/js/dataTables.bootstrap4.min.js"></script>
+    <script src="{{ asset('assets/js/page/modules-sweetalert.js') }}"></script>
+    <script src="{{ asset('assets/js/dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/js/select.bootstrap4.min.js') }}"></script>
+
 
     <!-- Template JS File -->
-    <script src="/assets/js/scripts.js"></script>
-    <script src="/assets/js/custom.js"></script>
+    <script src="{{ asset('assets/js/scripts.js') }}"></script>
+    <script src="{{ asset('assets/js/custom.js') }}"></script>
 
     <!-- Page Specific JS File -->
-    <script src="/assets/js/datatables.js"></script>
+    <script src="{{ asset('assets/js/datatables.js') }}"></script>
     @stack('customScript')
 </body>
 
