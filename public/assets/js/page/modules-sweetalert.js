@@ -1,5 +1,24 @@
 "use strict";
 
+$(".confirm-delete").click(function (event) {
+  let form = $(this).closest("form");
+  event.preventDefault();
+  swal({
+      title: `Are you sure?`,
+      text: "Once deleted, you will not be able to recover this data!",
+      icon: "warning",
+      buttons: {
+          cancel: 'Cancel',
+          confirm: 'OK',
+      },
+      dangerMode: true,
+  }).then((willDelete) => {
+      if (willDelete) {
+          form.submit();
+      }
+  });
+});
+
 $("#swal-1").click(function() {
 	swal('Hello');
 });

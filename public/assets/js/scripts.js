@@ -333,6 +333,14 @@ $(function() {
     $(".select2").select2(select2Opts || {});
   }
 
+  $(document).on('select2:open', () => {
+    document.querySelector('.select2-search__field').focus();
+  });
+
+  $('#create, #update').on('shown.bs.modal', function () {
+    $('#category, #category2').focus();
+  });
+
   // Selectric
   if(jQuery().selectric) {
     $(".selectric").selectric({
