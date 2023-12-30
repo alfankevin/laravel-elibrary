@@ -14,7 +14,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card card-primary" style="background-color: #F3F2EC">
-                        <div class="card-header">
+                        <div class="card-header" style="border-bottom-color: #F3F2EC">
                             <h4>Book List</h4>
                             <div class="card-header-action">
                                 <button type="button" class="btn btn-icon icon-left btn-primary">Add Book</button>
