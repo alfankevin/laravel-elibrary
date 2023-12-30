@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBookRequest;
-use App\Models\Category;
 
 class BookController extends Controller
 {
@@ -40,13 +40,17 @@ class BookController extends Controller
      */
     public function store(StoreBookRequest $request)
     {
+        if ($request->hasFile('cover')) {
+            $cover = $request->file('cover')->store('cover', 'public');
+        }
+
         Book::create([
             'id_category' => $request['id_category'],
-            'cover' => $request['cover'],
             'title' => $request['title'],
             'description' => $request['description'],
             'quantity' => $request['quantity'],
             'file' => $request['file'],
+            'cover' => $cover,
         ]);
 
         return redirect(route('book.index'));

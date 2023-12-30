@@ -84,11 +84,20 @@
                     <h5 class="modal-title" id="exampleModalLongTitle">Add Book</h5>
                 </div>
                 <div class="modal-body">
-                    <form id="createForm" action="{{ route('book.store') }}" method="post">
+                    <form id="createForm" action="{{ route('book.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-4">
-                                <input id="cover" name="cover" value="{{ old('cover') }}">
+                                <div class="form-group">
+                                    <input id="cover" name="cover" type="file"
+                                        class="form-control @error('cover') is-invalid @enderror"
+                                        value="{{ old('cover') }}">
+                                    @error('cover')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
                             </div>
                             <div class="col-8">
                                 <div class="row">
