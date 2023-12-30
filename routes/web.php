@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\BookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,13 +15,24 @@ use App\Http\Controllers\SiswaController;
 */
 
 Route::get('/', function () {
-    return view('auth.login');
-});
+    return view('main.main');
+})->name('main');
 
-Route::middleware(['auth'])->group(function(){
-    Route::get('/home', function () {
-        return view('dashboard');
-    })->name('home');
-});
+Route::get('/booklist', function () {
+    return view('main.pages.booklist');
+})->name('booklist');
 
-Route::resource('siswa', SiswaController::class);
+Route::get('/wishlist', function () {
+    return view('main.pages.wishlist');
+})->name('wishlist');
+
+Route::get('/login', function () {
+    return view('admin.auth.login');
+})->name('login');
+
+Route::middleware(['auth', 'admin'])->group(function(){
+    Route::get('/admin', function () {
+        return view('admin.admin');
+    })->name('admin');
+    Route::resource('book', BookController::class);
+});

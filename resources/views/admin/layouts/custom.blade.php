@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/components.css') }}">
 </head>
 
-<body>
+<body style="background-color: #F3F2EC">
 @section('body')
 
 @show

@@ -20,34 +20,25 @@
     <link rel="stylesheet" href="{{ asset('assets/css/components.css') }}">
 </head>
 
-<body>
+<body style="background-color: #EDEBE4">
     <div id="app">
         <div class="main-wrapper">
             <div class="navbar-bg"></div>
             <nav class="navbar navbar-expand-lg main-navbar">
-                @include('layouts.navbar')
+                @include('admin.layouts.navbar')
             </nav>
-            <div class="main-sidebar sidebar-style-2">
+            <div class="main-sidebar sidebar-style-2" style="background-color: #F3F2EC">
                 <aside id="sidebar-wrapper">
-                    @include('layouts.sidebar')
+                    @include('admin.layouts.sidebar')
                 </aside>
             </div>
 
             <!-- Main Content -->
             <div class="main-content">
-                @section('content')
-                    <section class="section">
-                        <div class="section-header">
-                            <h1>Blank Page</h1>
-                        </div>
-
-                        <div class="section-body">
-                        </div>
-                    </section>
-                @show
+                @yield('content')
             </div>
             <footer class="main-footer">
-                @include('layouts.footer')
+                @include('admin.layouts.footer')
             </footer>
         </div>
     </div>

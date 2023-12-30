@@ -1,11 +1,14 @@
-@extends('layouts.custom')
+@extends('admin.layouts.custom')
+@section('title', 'Register')
 @section('body')
     <section class="section">
         <div class="container mt-5">
             <div class="row">
                 <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2">
-                    <div class="login-brand">
-                        <img src="{{ asset('/assets/img/polinema.png') }}" alt="logo" width="100">
+                    <div class="login-brand my-5">
+                        <a href="/">
+                            <img src="{{ asset('/assets/img/main/main-logo.png') }}" alt="logo" width="175">
+                        </a>
                     </div>
 
                     <div class="card card-primary">
@@ -13,7 +16,7 @@
                             <h4>Register</h4>
                         </div>
 
-                        <div class="card-body">
+                        <div class="card-body" style="padding: 25px">
                             <form method="POST">
                                 @csrf
                                 <div class="form-group ">
@@ -72,7 +75,7 @@
                         </div>
                     </div>
                     <div class="mt-5 text-muted text-center">
-                        Already have an account? <a href="{{route('login')}}">Log in</a>
+                        Already have an account? <a href="{{route('login')}}" class="text-hover">Log in</a>
                     </div>
                     <div class="simple-footer">
                         Copyright &copy; Stisla 2018
