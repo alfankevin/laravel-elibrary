@@ -14,11 +14,11 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         $data = [
-            ['id_category' => 1, 'category' => 'Business'],
-            ['id_category' => 2, 'category' => 'Technology'],
-            ['id_category' => 3, 'category' => 'Romantic'],
-            ['id_category' => 4, 'category' => 'Adventure'],
-            ['id_category' => 5, 'category' => 'Fictional'],
+            ['id_category' => 1, 'category' => 'Adventure'],
+            ['id_category' => 2, 'category' => 'Entertainment'],
+            ['id_category' => 3, 'category' => 'Fiction'],
+            ['id_category' => 4, 'category' => 'Lifestyle'],
+            ['id_category' => 5, 'category' => 'Nature'],
         ];
 
         DB::table('category')->insert($data);

@@ -310,7 +310,7 @@
 
             $("#id").val(id);
             $("#cover").val(cover);
-            $("#cover2").attr("src", cover2);
+            $("#cover2").attr("src", "/" + cover2);
             $("#title2").val(title);
             $("#author2").val(author);
             $('#category2').val(category).trigger('change');

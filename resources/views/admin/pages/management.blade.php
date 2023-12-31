@@ -17,7 +17,7 @@
                         <div class="card-header">
                             <h4>Book List</h4>
                             <div class="card-header-action">
-                                <a href="{{ route('book.export') }}" type="button" class="btn btn-icon icon-left btn-primary">Export Book</a>
+                                <a href="{{ route('book.export') }}" type="button" class="btn btn-icon icon-left btn-primary">Export Books</a>
                             </div>
                         </div>
                         
