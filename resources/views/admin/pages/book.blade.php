@@ -391,7 +391,6 @@
         }
         .cover-image {
             position: relative;
-            object-fit: cover;
             aspect-ratio: 3/4;
             border-radius: .25rem 0 0 .25rem;
             z-index: 2;

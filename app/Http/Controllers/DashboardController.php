@@ -2,36 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
+use App\Models\User;
 use App\Models\Category;
-use App\Exports\BookExport;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Maatwebsite\Excel\Facades\Excel;
 
-class ManagementController extends Controller
+class DashboardController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $book = DB::select('
-            SELECT book.*, category.category
-            FROM book
-            INNER JOIN category
-            ON book.id_category = category.id_category
-            ORDER BY book.id DESC;
-        ');
-        $category = Category::orderByDesc('id_category')->get();
-        return view('admin.pages.management', compact('book', 'category'));
+        $admin = User::where('role', 'admin')->count();
+        $users = User::where('role', 'user')->count();
+        $books = Book::count();
+        $categories = Category::count();
+        return view('admin.admin', compact('admin', 'users', 'books', 'categories'));
     }
-
-    public function export()
-    {
-        return Excel::download(new BookExport, 'books.xlsx');
-    }
-
 
     /**
      * Show the form for creating a new resource.

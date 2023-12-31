@@ -34,5 +34,6 @@ Route::middleware(['auth', 'admin'])->group(function(){
         Route::resource('management', ManagementController::class);
         Route::post('/book/edit', [BookController::class, 'update'])->name('book.edit');
         Route::post('/category/edit', [CategoryController::class, 'update'])->name('category.edit');
+        Route::get('/book-export', [ManagementController::class, 'export'])->name('book.export');
     });
 });

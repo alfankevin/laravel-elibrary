@@ -121,7 +121,7 @@
                             <div class="col-md-6">
                                 <figure class="products-thumb">
                                     <div style="padding: 12.5px">
-                                        <img src="{{ asset($item->cover) }}" alt="book" class="single-image" style="aspect-ratio: 3/4 border-radius: .25rem 0 0 .25rem">
+                                        <img src="{{ asset($item->cover) }}" alt="book" class="single-image" style="aspect-ratio: 3/4; border-radius: .25rem 0 0 .25rem">
                                     </div>
                                 </figure>
                             </div>
@@ -182,7 +182,7 @@
                                     <div class="col-md-3">
                                         <div class="product-item">
                                             <figure class="product-style">
-                                                <a href="{{ route('booklist') }}"><img src="{{ asset($item->cover) }}" alt="books" class="product-item" style="aspect-ratio: 3/4 border-radius: .25rem 0 0 .25rem"></a>
+                                                <a href="{{ route('booklist') }}"><img src="{{ asset($item->cover) }}" alt="books" class="product-item" style="aspect-ratio: 3/4; border-radius: .25rem 0 0 .25rem"></a>
                                                 <button type="button" class="add-to-cart"
                                                     data-product-tile="add-to-cart">Add to
                                                     Wishlist</button>

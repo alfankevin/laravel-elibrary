@@ -5,19 +5,19 @@
     <a href="#"><img src="/assets/img/polinema.png" alt="" width="25"></a>
 </div>
 <ul class="sidebar-menu">
-    <li class="{{ request()->is('admin') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin') }}"><i
+    <li class="{{ request()->is('admin/dashboard') ? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.index') }}"><i
                 class="fas fa-chart-pie"></i>
             <span>Dashboard</span></a>
     </li>
-    <li class="{{ request()->is('book') ? 'active' : '' }}"><a class="nav-link" href="{{ route('book.index') }}"><i
+    <li class="{{ request()->is('admin/book') ? 'active' : '' }}"><a class="nav-link" href="{{ route('book.index') }}"><i
                 class="fas fa-book"></i>
             <span>Book List</span></a>
     </li>
-    <li class="{{ request()->is('category') ? 'active' : '' }}"><a class="nav-link"
+    <li class="{{ request()->is('admin/category') ? 'active' : '' }}"><a class="nav-link"
             href="{{ route('category.index') }}"><i class="fas fa-list"></i>
             <span>Category</span></a>
     </li>
-    <li class="{{ request()->is('management') ? 'active' : '' }}"><a class="nav-link"
+    <li class="{{ request()->is('admin/management') ? 'active' : '' }}"><a class="nav-link"
             href="{{ route('management.index') }}"><i class="fas fa-home"></i>
             <span>Home Page</span></a>
     </li>
