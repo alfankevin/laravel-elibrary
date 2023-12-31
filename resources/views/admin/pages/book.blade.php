@@ -13,8 +13,8 @@
             </div>
             <div class="row">
                 <div class="col-12">
-                    <div class="card card-primary" style="background-color: #F3F2EC">
-                        <div class="card-header" style="border-bottom-color: #F3F2EC">
+                    <div class="card card-primary">
+                        <div class="card-header">
                             <h4>Book List</h4>
                             <div class="card-header-action">
                                 <button type="button" class="btn btn-icon icon-left btn-primary" data-toggle="modal" data-target="#create">Add Book</button>
@@ -28,7 +28,8 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Cover</th>
-                                            <th>Book Title</th>
+                                            <th>Title</th>
+                                            <th>Author</th>
                                             <th>Category</th>
                                             <th>Description</th>
                                             <th>Quantity</th>
@@ -40,8 +41,9 @@
                                         @foreach ($book as $key => $item)
                                             <tr>
                                                 <td>{{ $key + 1 }}</td>
-                                                <td>{{ $item->cover }}</td>
+                                                <td><img class="cover-image" src="{{ asset($item->cover) }}" alt="cover" width="100"></td>
                                                 <td>{{ $item->title }}</td>
+                                                <td>{{ $item->author }}</td>
                                                 <td>{{ $item->category }}</td>
                                                 <td>{{ $item->description }}</td>
                                                 <td>{{ $item->quantity }}</td>
@@ -49,7 +51,7 @@
                                                 <td class="text-right">
                                                     <div class="d-flex justify-content-end">
                                                         <button type="button" data-toggle="modal" data-target="#update" data-id="{{ $item->id }}"
-                                                            data-cover="{{ $item->cover }}" data-title="{{ $item->title }}"
+                                                            data-cover="{{ $item->cover }}" data-title="{{ $item->title }}" data-author="{{ $item->author }}"
                                                             data-category="{{ $item->id_category }}" data-description="{{ $item->description }}"
                                                             data-quantity="{{ $item->quantity }}" data-file="{{ $item->file }}"
                                                             class="btn btn-sm btn-warning btn-icon d-flex align-items-center ml-2 mr-2 edit">
@@ -78,7 +80,7 @@
     </section>
     <!-- Modal -->
     <div class="modal fade" id="create" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 700px">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Add Book</h5>
@@ -88,9 +90,11 @@
                         @csrf
                         <div class="row">
                             <div class="col-4">
-                                <div class="form-group">
-                                    <input id="cover" name="cover" type="file"
-                                        class="form-control @error('cover') is-invalid @enderror"
+                                <div class="cover-parent">
+                                    <span class="absolute form-control d-flex align-items-center justify-content-center cover-text">Cover</span>
+                                    <img id="cover" class="cover-image" src="{{ asset('assets/img/blank.png') }}" alt="cover" style="width: 100% !important">
+                                    <input id="cover-input" name="cover" type="file"
+                                        class="cover-input absolute form-control @error('cover') is-invalid @enderror"
                                         value="{{ old('cover') }}">
                                     @error('cover')
                                         <div class="invalid-feedback">
@@ -101,11 +105,22 @@
                             </div>
                             <div class="col-8">
                                 <div class="row">
-                                    <div class="col-6" style="padding-right: 12.5px">
+                                    <div class="col-12">
                                         <div class="form-group">
                                             <input type="text" class="form-control @error('title') is-invalid @enderror" id="title"
                                             name="title" spellcheck="false" autocomplete="off" placeholder="Title" value="{{ old('title') }}">
                                             @error('title')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-6" style="padding-right: 12.5px">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control @error('author') is-invalid @enderror" id="author"
+                                            name="author" spellcheck="false" autocomplete="off" placeholder="Author" value="{{ old('author') }}">
+                                            @error('author')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
@@ -132,7 +147,7 @@
                                     <div class="col-12">
                                         <div class="form-group">
                                             <textarea id="description" class="form-control @error('description') is-invalid @enderror"
-                                            name="description" placeholder="Description" style="height: 126px" value="{{ old('description') }}">{{ old('description') }}</textarea>
+                                            name="description" placeholder="Description" style="height: 84px" value="{{ old('description') }}">{{ old('description') }}</textarea>
                                             @error('description')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -153,8 +168,8 @@
                                     </div>
                                     <div class="col-6" style="padding-left: 12.5px">
                                         <div class="form-group m-0">
-                                            <span class="form-control file-parent" style="color: #495057">File
-                                                <input type="text" class="file form-control @error('file') is-invalid @enderror"
+                                            <span class="form-control file-parent">File
+                                                <input type="text" class="absolute file-input form-control @error('file') is-invalid @enderror"
                                                     id="file" name="file" spellcheck="false" autocomplete="off" placeholder="File" value="file">
                                             </span>
                                             @error('file')
@@ -178,27 +193,40 @@
     </div>    
     <!-- Modal -->
     <div class="modal fade" id="update" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 700px">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Edit Book</h5>
                 </div>
                 <div class="modal-body">
-                    <form id="createForm" action="{{ route('book.edit') }}" method="post">
+                    <form id="updateForm" action="{{ route('book.edit') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-4">
-                                <input id="cover2" name="cover" style="display: none">
-                                <div class="box" style="background-color: #ddd; height: 100%; width: 100%"></div>
+                                <div class="cover-parent">
+                                    <img id="cover2" class="cover-image" src="{{ asset('assets/img/blank.png') }}" alt="cover" style="width: 100% !important">
+                                    <input id="cover-input2" class="cover-input absolute" type="file" value="{{ old('cover') }}">
+                                </div>
                             </div>
                             <div class="col-8">
                                 <div class="row">
-                                    <div class="col-6" style="padding-right: 12.5px">
+                                    <div class="col-12">
                                         <div class="form-group">
                                             <input id="id" name="id" style="display: none">
                                             <input type="text" class="form-control @error('title') is-invalid @enderror"
                                                 id="title2" name="title" spellcheck="false" autocomplete="off" placeholder="Title">
                                             @error('title')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-6" style="padding-right: 12.5px">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control @error('author') is-invalid @enderror"
+                                                id="author2" name="author" spellcheck="false" autocomplete="off" placeholder="author">
+                                            @error('author')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
@@ -221,7 +249,7 @@
                                     </div>
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <textarea id="description2" class="form-control @error('description') is-invalid @enderror" name="description" name="description" placeholder="Description" style="height: 126px"></textarea>
+                                            <textarea id="description2" class="form-control @error('description') is-invalid @enderror" name="description" name="description" placeholder="Description" style="height: 84px"></textarea>
                                             @error('description')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -242,8 +270,8 @@
                                     </div>
                                     <div class="col-6" style="padding-left: 12.5px">
                                         <div class="form-group m-0">
-                                            <span class="form-control file-parent" style="color: #495057">File
-                                                <input type="text" class="file form-control @error('file') is-invalid @enderror"
+                                            <span class="form-control file-parent">File
+                                                <input type="text" class="absolute file-input form-control @error('file') is-invalid @enderror"
                                                     id="file2" name="file" spellcheck="false" autocomplete="off" placeholder="File">
                                             </span>
                                             @error('file')
@@ -272,15 +300,19 @@
         $(document).on("click", ".edit", function() {
             var id = $(this).data('id');
             var cover = $(this).data('cover');
+            var cover2 = $(this).data('cover');
             var title = $(this).data('title');
+            var author = $(this).data('author');
             var category = $(this).data('category');
             var description = $(this).data('description');
             var quantity = $(this).data('quantity');
             var file = $(this).data('file');
 
             $("#id").val(id);
-            $("#cover2").val(cover);
+            $("#cover").val(cover);
+            $("#cover2").attr("src", cover2);
             $("#title2").val(title);
+            $("#author2").val(author);
             $('#category2').val(category).trigger('change');
             $("#description2").val(description);
             $("#quantity2").val(quantity);
@@ -289,6 +321,24 @@
         function resetForm() {
             document.getElementById("createForm").reset();
         }
+        // Image Preview
+        const inputImage = document.querySelector("#cover-input");
+		const previewImage = document.querySelector("#cover");
+
+		const displayInputImage = () => {	
+			const oFReader = new FileReader();
+			oFReader.readAsDataURL(inputImage.files[0]);
+
+			oFReader.onload = function (oFREvent) {
+				previewImage.src = oFREvent.target.result;
+			}
+		}
+
+		if (inputImage.files[0] != null) {	
+			displayInputImage()
+		}
+
+		inputImage.addEventListener("change", displayInputImage) 
     </script>
     <script src="/assets/js/select2.min.js"></script>
 @endpush
@@ -306,17 +356,52 @@
         textarea {
             resize: none;
         }
-        .file-parent {
-            position: relative;
-        }
-        .file {
+        .absolute {
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
+        }
+        .card-primary {
+            background-color: #F3F2EC !important;
+        }
+        .card-header {
+            border-bottom-color: #F3F2EC !important;
+        }
+        .cover-image {
+            position: relative;
+            object-fit: cover;
+            aspect-ratio: 3/4;
+            border-radius: .25rem 0 0 .25rem;
+            z-index: 2;
+        }
+        .modal-dialog {
+            max-width: 750px;
+        }
+        .cover-parent {
+            height: 100%;
+            width: 100%;
+            position: relative;
+        }
+        .cover-parent > * {
+            width: 100%;
+            border-radius: .25rem;
+        }
+        .cover-text {
+            height: inherit !important;
+            color: inherit;
+            z-index: 1;
+        }
+        .cover-input, .file-input {
+            height: inherit !important;
             opacity: 0;
             cursor: pointer;
+            z-index: 3;
+        }
+        .file-parent {
+            position: relative;
+            color: inherit;
         }
     </style>
     <link rel="stylesheet" href="/assets/css/select2.min.css">

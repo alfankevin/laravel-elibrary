@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_category')->default(0);
             $table->foreign('id_category')->references('id_category')->on('category')->onDelete('cascade');
             $table->string('title', 50);
+            $table->string('author', 25);
             $table->string('description', 500);
             $table->integer('quantity');
             $table->string('file');

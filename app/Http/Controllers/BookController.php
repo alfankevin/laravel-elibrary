@@ -23,7 +23,7 @@ class BookController extends Controller
             ON book.id_category = category.id_category
             ORDER BY book.id DESC;
         ');
-        $category = Category::where('id_category', '!=', 1)->orderByDesc('id_category')->get();
+        $category = Category::orderByDesc('id_category')->get();
         return view('admin.pages.book', compact('book', 'category'));
     }
 
@@ -41,19 +41,24 @@ class BookController extends Controller
     public function store(StoreBookRequest $request)
     {
         if ($request->hasFile('cover')) {
-            $cover = $request->file('cover')->store('cover', 'public');
+            // $cover = $request->file('cover')->store('cover', 'public'); // Storage
+            $cover = $request->file('cover');
+            $coverName = $cover->getClientOriginalName();
+            $path = 'assets/files/image';
+            $cover = $cover->move($path, $coverName);
         }
 
         Book::create([
             'id_category' => $request['id_category'],
             'title' => $request['title'],
+            'author' => $request['author'],
             'description' => $request['description'],
             'quantity' => $request['quantity'],
             'file' => $request['file'],
             'cover' => $cover,
         ]);
 
-        return redirect(route('book.index'));
+        return redirect()->route('book.index');
     }
 
     /**
@@ -79,20 +84,22 @@ class BookController extends Controller
     {
         $id_book = $request['id'];
         $id_category = $request['id_category'];
-        $cover = $request['cover'];
         $title = $request['title'];
+        $author = $request['author'];
         $description = $request['description'];
         $quantity = $request['quantity'];
         $file = $request['file'];
+        $cover = $request['cover'];
 
         Book::where('id', $id_book)
                 ->update([
                     'id_category' => $id_category,
-                    'cover' => $cover,
                     'title' => $title,
+                    'author' => $author,
                     'description' => $description,
                     'quantity' => $quantity,
                     'file' => $file,
+                    'cover' => $cover,
                 ]);
 
         return redirect()->route('book.index');

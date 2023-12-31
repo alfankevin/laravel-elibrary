@@ -23,11 +23,13 @@ class StoreBookRequest extends FormRequest
     {
         return [
             'id_category' => 'required',
-            'cover' => 'required|image|mimes:png,jpg,jpeg|max:2048',
             'title' => 'required|string|max:50',
+            'author' => 'required|string|max:25',
             'description' => 'required|string|max:500',
-            'quantity' => 'required|integer|max:100',
-            'file' => 'required|mimes:pdf',
+            'quantity' => 'required|integer',
+            // 'file' => 'required|mimes:pdf',
+            'file' => 'required',
+            'cover' => 'required|image|mimes:png,jpg,jpeg|max:2048',
         ];
     }
 }
