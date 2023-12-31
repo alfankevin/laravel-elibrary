@@ -34,6 +34,12 @@ class MainController extends Controller
         return view('main.pages.booklist', compact('book'));
     }
 
+    public function wishlist()
+    {
+        $book = Book::orderByDesc('id')->get();
+        return view('main.pages.wishlist', compact('book'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */

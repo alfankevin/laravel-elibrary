@@ -75,22 +75,6 @@
             <div class="main-menu stellarnav">
               <ul class="menu-list" style="cursor: default">
                 <li class="menu-item {{ request()->is('/') ? 'active' : '' }}"><a href="{{ route('index') }}" class="nav-link">Home</a></li>
-                {{-- <li class="menu-item has-sub">
-                  <a href="#pages" class="nav-link">Pages</a>
-
-                  <ul>
-                    <li class="active"><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About <span class="badge bg-dark">PRO</span></a></li>
-                    <li><a href="styles.html">Styles <span class="badge bg-dark">PRO</span></a></li>
-                    <li><a href="blog.html">Blog <span class="badge bg-dark">PRO</span></a></li>
-                    <li><a href="single-post.html">Post Single <span class="badge bg-dark">PRO</span></a></li>
-                    <li><a href="shop.html">Our Store <span class="badge bg-dark">PRO</span></a></li>
-                    <li><a href="single-product.html">Product Single <span class="badge bg-dark">PRO</span></a></li>
-                    <li><a href="contact.html">Contact <span class="badge bg-dark">PRO</span></a></li>
-                    <li><a href="thank-you.html">Thank You <span class="badge bg-dark">PRO</span></a></li>
-                  </ul>
-
-                </li> --}}
                 <li class="menu-item {{ request()->is('booklist') ? 'active' : '' }}"><a href="{{ route('booklist') }}" class="nav-link">Books</a></li>
                 @auth
                     @if(Auth::user()->role === 'user')
@@ -103,7 +87,7 @@
                 <li class="menu-item"><a href="#download-app" class="nav-link">Download App</a></li>
                 @auth
                     @if(Auth::user()->role === 'admin')
-                        <li class="menu-item"><a href="{{ route('admin') }}" class="nav-link btn btn-outline-dark rounded-pill m-0">Manage</a></li>
+                        <li class="menu-item"><a href="{{ route('dashboard.index') }}" class="nav-link btn btn-outline-dark rounded-pill m-0">Manage</a></li>
                     @endif
                 @endauth
               </ul>
