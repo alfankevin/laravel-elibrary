@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
+use App\Models\Book;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
@@ -22,8 +22,16 @@ class MainController extends Controller
             ORDER BY book.id ASC
             LIMIT 8;
         ');
-        $category = Category::orderByDesc('id_category')->get();
-        return view('main.main', compact('book', 'category'));
+        $banner = Book::orderByDesc('id')->take(2)->get();
+        $featured = Book::orderByDesc('id')->take(4)->get();
+        $popular = Book::where('quantity', Book::max('quantity'))->get();
+        return view('main.main', compact('book', 'banner', 'featured', 'popular'));
+    }
+
+    public function booklist()
+    {
+        $book = Book::orderByDesc('id')->get();
+        return view('main.pages.booklist', compact('book'));
     }
 
     /**

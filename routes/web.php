@@ -20,9 +20,7 @@ use App\Http\Controllers\ManagementController;
 
 Route::resource('/', MainController::class);
 
-Route::get('/booklist', function () {
-    return view('main.pages.booklist');
-})->name('booklist');
+Route::get('/booklist', [MainController::class, 'booklist'])->name('booklist');
 
 Route::get('/wishlist', function () {
     return view('main.pages.wishlist');

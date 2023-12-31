@@ -42,9 +42,9 @@
                                             <tr>
                                                 <td>{{ $key + 1 }}</td>
                                                 <td><img class="cover-image" src="{{ asset($item->cover) }}" alt="cover" height="150"></td>
-                                                <td>{{ $item->title }}</td>
-                                                <td>{{ $item->author }}</td>
-                                                <td>{{ $item->category }}</td>
+                                                <td class="text-capitalize">{{ $item->title }}</td>
+                                                <td class="text-capitalize">{{ $item->author }}</td>
+                                                <td class="text-capitalize">{{ $item->category }}</td>
                                                 <td>{{ $item->description }}</td>
                                                 <td>{{ $item->quantity }}</td>
                                                 <td>{{ $item->file }}</td>
