@@ -6,6 +6,7 @@ use App\Models\Book;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBookRequest;
 
@@ -89,7 +90,6 @@ class BookController extends Controller
         $description = $request['description'];
         $quantity = $request['quantity'];
         $file = $request['file'];
-        $cover = $request['cover'];
 
         Book::where('id', $id_book)
                 ->update([
@@ -99,8 +99,23 @@ class BookController extends Controller
                     'description' => $description,
                     'quantity' => $quantity,
                     'file' => $file,
-                    'cover' => $cover,
                 ]);
+
+        $book = Book::findorfail($id_book);
+        if ($request->hasFile('cover')) {
+
+            $path = 'assets/files/image/'. $book->cover;
+            if(file_exists($path)) {
+                File::delete($path);
+            }
+
+            $cover = $request->file('cover');
+            $coverName = $cover->getClientOriginalName();
+            $path = 'assets/files/image/';
+            $cover = $cover->move($path, $coverName);
+            $book->cover = $cover;
+        }
+        $book->update();
 
         return redirect()->route('book.index');
     }

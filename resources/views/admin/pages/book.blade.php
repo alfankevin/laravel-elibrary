@@ -41,7 +41,7 @@
                                         @foreach ($book as $key => $item)
                                             <tr>
                                                 <td>{{ $key + 1 }}</td>
-                                                <td><img class="cover-image" src="{{ asset($item->cover) }}" alt="cover" width="100"></td>
+                                                <td><img class="cover-image" src="{{ asset($item->cover) }}" alt="cover" height="150"></td>
                                                 <td>{{ $item->title }}</td>
                                                 <td>{{ $item->author }}</td>
                                                 <td>{{ $item->category }}</td>
@@ -204,8 +204,8 @@
                         <div class="row">
                             <div class="col-4">
                                 <div class="cover-parent">
-                                    <img id="cover2" class="cover-image" src="{{ asset('assets/img/blank.png') }}" alt="cover" style="width: 100% !important">
-                                    <input id="cover-input2" class="cover-input absolute" type="file" value="{{ old('cover') }}">
+                                    <img id="cover2" class="cover-image" src="" alt="cover" style="width: 100% !important">
+                                    <input id="cover-input2" name="cover" class="cover-input absolute" type="file" value="{{ old('cover') }}">
                                 </div>
                             </div>
                             <div class="col-8">
@@ -318,27 +318,46 @@
             $("#quantity2").val(quantity);
             $("#file2").val(file);
         });
+
+        // Reset createForm
         function resetForm() {
             document.getElementById("createForm").reset();
         }
+
         // Image Preview
-        const inputImage = document.querySelector("#cover-input");
-		const previewImage = document.querySelector("#cover");
+        function displayInputImage(input, preview) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.readAsDataURL(input.files[0]);
 
-		const displayInputImage = () => {	
-			const oFReader = new FileReader();
-			oFReader.readAsDataURL(inputImage.files[0]);
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                };
+            }
+        }
 
-			oFReader.onload = function (oFREvent) {
-				previewImage.src = oFREvent.target.result;
-			}
-		}
+        const inputImage1 = document.querySelector("#cover-input");
+        const previewImage1 = document.querySelector("#cover");
 
-		if (inputImage.files[0] != null) {	
-			displayInputImage()
-		}
+        const inputImage2 = document.querySelector("#cover-input2");
+        const previewImage2 = document.querySelector("#cover2");
 
-		inputImage.addEventListener("change", displayInputImage) 
+        inputImage1.addEventListener("change", function () {
+            displayInputImage(this, previewImage1);
+        });
+
+        inputImage2.addEventListener("change", function () {
+            displayInputImage(this, previewImage2);
+        });
+
+        // Handle initial preview display
+        if (inputImage1.files[0]) {
+            displayInputImage(inputImage1, previewImage1);
+        }
+
+        if (inputImage2.files[0]) {
+            displayInputImage(inputImage2, previewImage2);
+        }
     </script>
     <script src="/assets/js/select2.min.js"></script>
 @endpush
