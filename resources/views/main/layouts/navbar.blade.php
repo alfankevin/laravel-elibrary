@@ -74,7 +74,7 @@
           <nav id="navbar">
             <div class="main-menu stellarnav">
               <ul class="menu-list" style="cursor: default">
-                <li class="menu-item {{ request()->is('/') ? 'active' : '' }}"><a href="{{ route('main') }}" class="nav-link">Home</a></li>
+                <li class="menu-item {{ request()->is('/') ? 'active' : '' }}"><a href="{{ route('index') }}" class="nav-link">Home</a></li>
                 {{-- <li class="menu-item has-sub">
                   <a href="#pages" class="nav-link">Pages</a>
 

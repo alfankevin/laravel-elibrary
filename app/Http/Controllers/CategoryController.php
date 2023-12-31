@@ -34,7 +34,7 @@ class CategoryController extends Controller
         Category::create([
             'category' => $request['category'],
         ]);
-        return redirect(route('category.index'));
+        return redirect()->route('category.index');
     }
 
     /**

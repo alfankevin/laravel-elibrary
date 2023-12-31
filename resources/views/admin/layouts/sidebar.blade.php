@@ -9,10 +9,6 @@
                 class="fas fa-chart-pie"></i>
             <span>Dashboard</span></a>
     </li>
-	<li class="{{ request()->is('category') ? '' : '' }}"><a class="nav-link"
-		href="{{ route('category.index') }}"><i class="fas fa-list"></i>
-		<span>Billboard</span></a>
-	</li>
     <li class="{{ request()->is('book') ? 'active' : '' }}"><a class="nav-link" href="{{ route('book.index') }}"><i
                 class="fas fa-book"></i>
             <span>Book List</span></a>
@@ -21,11 +17,11 @@
             href="{{ route('category.index') }}"><i class="fas fa-list"></i>
             <span>Category</span></a>
     </li>
-    <li class="{{ request()->is('category') ? '' : '' }}"><a class="nav-link"
-            href="{{ route('category.index') }}"><i class="fas fa-list"></i>
-            <span>Featured</span></a>
+    <li class="{{ request()->is('management') ? 'active' : '' }}"><a class="nav-link"
+            href="{{ route('management.index') }}"><i class="fas fa-home"></i>
+            <span>Home Page</span></a>
     </li>
-    <li class=""><a class="nav-link" href="{{ route('main') }}"><i class="fas fa-arrow-left"></i>
+    <li class=""><a class="nav-link" href="{{ route('index') }}"><i class="fas fa-arrow-left"></i>
             <span>Back to Library</span></a>
     </li>
 </ul>

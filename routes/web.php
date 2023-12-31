@@ -3,7 +3,9 @@
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\MainController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ManagementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,9 +18,7 @@ use App\Http\Controllers\CategoryController;
 |
 */
 
-Route::get('/', function () {
-    return view('main.main');
-})->name('main');
+Route::resource('/', MainController::class);
 
 Route::get('/booklist', function () {
     return view('main.pages.booklist');
@@ -38,6 +38,7 @@ Route::middleware(['auth', 'admin'])->group(function(){
     })->name('admin');
     Route::resource('book', BookController::class);
     Route::resource('category', CategoryController::class);
+    Route::resource('management', ManagementController::class);
     Route::post('/book/edit', [BookController::class, 'update'])->name('book.edit');
     Route::post('/category/edit', [CategoryController::class, 'update'])->name('category.edit');
 });

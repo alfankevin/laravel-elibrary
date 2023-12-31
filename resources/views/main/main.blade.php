@@ -231,137 +231,24 @@
                     <div class="tab-content">
                         <div id="all-genre" data-tab-content class="active">
                             <div class="row">
-
-                                <div class="col-md-3">
-                                    <div class="product-item">
-                                        <figure class="product-style">
-                                            <img src="assets/img/main/tab-item1.jpg" alt="Books" class="product-item">
-                                            <button type="button" class="add-to-cart"
-                                                data-product-tile="add-to-cart">Add to
-                                                Wishlist</button>
-                                        </figure>
-                                        <figcaption>
-                                            <h3>Portrait photography</h3>
-                                            <span>Adam Silber</span>
-                                            <div class="item-price">$ 40.00</div>
-                                        </figcaption>
+                                
+                                @foreach ($book as $key => $item)
+                                    <div class="col-md-3">
+                                        <div class="product-item">
+                                            <figure class="product-style">
+                                                <a href="{{ route('booklist') }}"><img src="{{ asset($item->cover) }}" alt="Books" class="product-item"></a>
+                                                <button type="button" class="add-to-cart"
+                                                    data-product-tile="add-to-cart">Add to
+                                                    Wishlist</button>
+                                            </figure>
+                                            <figcaption>
+                                                <h3>{{ $item->title }}</h3>
+                                                <span>{{ $item->author }}</span>
+                                                <div class="item-price">{{ $item->quantity }} Left</div>
+                                            </figcaption>
+                                        </div>
                                     </div>
-                                </div>
-
-                                <div class="col-md-3">
-                                    <div class="product-item">
-                                        <figure class="product-style">
-                                            <img src="assets/img/main/tab-item2.jpg" alt="Books" class="product-item">
-                                            <button type="button" class="add-to-cart"
-                                                data-product-tile="add-to-cart">Add to
-                                                Wishlist</button>
-                                        </figure>
-                                        <figcaption>
-                                            <h3>Once upon a time</h3>
-                                            <span>Klien Marry</span>
-                                            <div class="item-price">$ 35.00</div>
-                                        </figcaption>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3">
-                                    <div class="product-item">
-                                        <figure class="product-style">
-                                            <img src="assets/img/main/tab-item3.jpg" alt="Books" class="product-item">
-                                            <button type="button" class="add-to-cart"
-                                                data-product-tile="add-to-cart">Add to
-                                                Wishlist</button>
-                                        </figure>
-                                        <figcaption>
-                                            <h3>Tips of simple lifestyle</h3>
-                                            <span>Bratt Smith</span>
-                                            <div class="item-price">$ 40.00</div>
-                                        </figcaption>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3">
-                                    <div class="product-item">
-                                        <figure class="product-style">
-                                            <img src="assets/img/main/tab-item4.jpg" alt="Books" class="product-item">
-                                            <button type="button" class="add-to-cart"
-                                                data-product-tile="add-to-cart">Add to
-                                                Wishlist</button>
-                                        </figure>
-                                        <figcaption>
-                                            <h3>Just felt from outside</h3>
-                                            <span>Nicole Wilson</span>
-                                            <div class="item-price">$ 40.00</div>
-                                        </figcaption>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="row">
-
-                                <div class="col-md-3">
-                                    <div class="product-item">
-                                        <figure class="product-style">
-                                            <img src="assets/img/main/tab-item5.jpg" alt="Books" class="product-item">
-                                            <button type="button" class="add-to-cart"
-                                                data-product-tile="add-to-cart">Add to
-                                                Wishlist</button>
-                                        </figure>
-                                        <figcaption>
-                                            <h3>Peaceful Enlightment</h3>
-                                            <span>Marmik Lama</span>
-                                            <div class="item-price">$ 40.00</div>
-                                        </figcaption>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3">
-                                    <div class="product-item">
-                                        <figure class="product-style">
-                                            <img src="assets/img/main/tab-item6.jpg" alt="Books" class="product-item">
-                                            <button type="button" class="add-to-cart"
-                                                data-product-tile="add-to-cart">Add to
-                                                Wishlist</button>
-                                        </figure>
-                                        <figcaption>
-                                            <h3>Great travel at desert</h3>
-                                            <span>Sanchit Howdy</span>
-                                            <div class="item-price">$ 40.00</div>
-                                        </figcaption>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3">
-                                    <div class="product-item">
-                                        <figure class="product-style">
-                                            <img src="assets/img/main/tab-item7.jpg" alt="Books" class="product-item">
-                                            <button type="button" class="add-to-cart"
-                                                data-product-tile="add-to-cart">Add to
-                                                Wishlist</button>
-                                        </figure>
-                                        <figcaption>
-                                            <h3>Life among the pirates</h3>
-                                            <span>Armor Ramsey</span>
-                                            <div class="item-price">$ 40.00</div>
-                                        </figcaption>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3">
-                                    <div class="product-item">
-                                        <figure class="product-style">
-                                            <img src="assets/img/main/tab-item8.jpg" alt="Books" class="product-item">
-                                            <button type="button" class="add-to-cart"
-                                                data-product-tile="add-to-cart">Add to
-                                                Wishlist</button>
-                                        </figure>
-                                        <figcaption>
-                                            <h3>Simple way of piece life</h3>
-                                            <span>Armor Ramsey</span>
-                                            <div class="item-price">$ 40.00</div>
-                                        </figcaption>
-                                    </div>
-                                </div>
+                                @endforeach
 
                             </div>
 
