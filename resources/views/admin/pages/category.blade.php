@@ -101,7 +101,7 @@
                   <h5 class="modal-title" id="exampleModalLongTitle">Edit Category</h5>
               </div>
               <div class="modal-body">
-                  <form action="{{ route('category.edit') }}" method="post">
+                  <form action="{{ route('category-edit') }}" method="post">
                       @csrf
                       <div class="form-group m-0">
                           <label for="category2">Category Name</label>

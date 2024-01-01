@@ -46,29 +46,44 @@ class MainController extends Controller
             ->join('users', 'user_book.id_user', '=', 'users.id')
             ->where('user_book.id_user', $id_user)
             ->where('user_book.wish', true)
-            ->orderByDesc('book.id')
+            ->orderByDesc('user_book.created_at')
             ->get();
 
         return view('main.pages.wishlist', compact('book'));
     }
 
-    public function wish($id_user, $id_book)
+    public function wish($id)
     {
-        $table = UserBook::where('id_user', $id_user)
-            ->where('id_book', $id_book)
+        $id_user = Auth::id();
+
+        $exist = UserBook::where('id_user', $id_user)
+            ->where('id_book', $id)
             ->where('wish', true)
             ->first();
 
-        if (!$table) {
-            $data = new UserBook();
-            $data->id_user = $id_user;
-            $data->id_book = $id_book;
-            $data->wish = true;
-            $data->save();
+        if (!$exist) {
+            $new = new UserBook();
+            $new->id_user = $id_user;
+            $new->id_book = $id;
+            $new->wish = true;
+            $new->save();
             return redirect()->route('wishlist');
         } else {
-            return redirect()->route('index');
+            return redirect()->route('wishlist');
         }
+    }
+
+    public function delete($id)
+    {
+        $id_user = Auth::id();
+
+        $exist = UserBook::where('id_user', $id_user)
+            ->where('id_book', $id)
+            ->where('wish', true)
+            ->first();
+        $exist->delete();
+
+        return redirect()->route('wishlist');
     }
 
     /**

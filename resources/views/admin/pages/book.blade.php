@@ -199,7 +199,7 @@
                     <h5 class="modal-title" id="exampleModalLongTitle">Edit Book</h5>
                 </div>
                 <div class="modal-body">
-                    <form id="updateForm" action="{{ route('book.edit') }}" method="post" enctype="multipart/form-data">
+                    <form id="updateForm" action="{{ route('book-edit') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-4">

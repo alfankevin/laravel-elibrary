@@ -1,3 +1,10 @@
+@guest
+@else
+@php
+    $id_user = Auth::user()->id;
+@endphp
+@endguest
+
 @extends('main.layouts.app')
 @section('content')
     <section id="best-selling" class="leaf-pattern-overlay">
@@ -72,11 +79,25 @@
                             <div class="row">
                                 
                                 @foreach ($popular as $key => $item)
+                                    @php
+                                        $exist = App\Models\UserBook::where('id_user', $id_user)
+                                            ->where('id_book', $item->id)
+                                            ->where('wish', true)
+                                            ->first();
+                                    @endphp
                                     <div class="col-md-3">
                                         <div class="product-item">
                                             <figure class="product-style">
                                                 <a href="{{ route('book.page', $item->id) }}"><img src="{{ asset('assets/files/image/' . $item->cover) }}" alt="books" class="product-item" style="aspect-ratio: 3/4; border-radius: .25rem 0 0 .25rem"></a>
-                                                <a href="{{ route('wishlist') }}" type="button" class="add-to-cart" data-product-tile="add-to-cart" data-id="{{ $item->id }}">Add to Wishlist</a>
+                                                @auth
+                                                    @if(Auth::user()->role === 'user')
+                                                        @if (!$exist)
+                                                            <a href="{{ route('book.wish', $item->id) }}" type="button" class="add-to-cart" data-product-tile="add-to-cart" data-id="{{ $item->id }}">Add to Wishlist</a>
+                                                        @else
+                                                            <a href="{{ route('wishlist') }}" type="button" class="add-to-cart" data-product-tile="add-to-cart">Added to Wishlist</a>
+                                                        @endif
+                                                    @endif
+                                                @endauth
                                             </figure>
                                             <figcaption>
                                                 <h3>{{ $item->title }}</h3>

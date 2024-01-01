@@ -1,3 +1,10 @@
+@guest
+@else
+@php
+    $id_user = Auth::user()->id;
+@endphp
+@endguest
+
 @extends('main.layouts.app')
 @section('content')
     <section id="billboard">
@@ -72,23 +79,22 @@
                         <div class="row">
 
                             @foreach ($featured as $key => $item)
+                                @php
+                                    $exist = App\Models\UserBook::where('id_user', $id_user)
+                                        ->where('id_book', $item->id)
+                                        ->where('wish', true)
+                                        ->first();
+                                @endphp
                                 <div class="col-md-3">
                                     <div class="product-item">
                                         <figure class="product-style">
                                             <a href="{{ route('book.page', $item->id) }}"><img src="{{ asset('assets/files/image/' . $item->cover) }}" alt="books" class="product-item" style="aspect-ratio: 3/4; border-radius: .25rem 0 0 .25rem"></a>
                                             @auth
                                                 @if(Auth::user()->role === 'user')
-                                                    @php
-                                                        $id_user = Auth::user()->id;
-                                                        $table = App\Models\UserBook::where('id_user', $id_user)
-                                                                            ->where('id_book', $item->id)
-                                                                            ->where('wish', true)
-                                                                            ->first();
-                                                    @endphp
-                                                    @if (!$table)
-                                                        <a href="{{ route('book.wish', ['id_user' => $id_user, 'id_book' => $item->id]) }}" type="button" class="add-to-cart" data-product-tile="add-to-cart" data-id="{{ $item->id }}">Add to Wishlist</a>
+                                                    @if (!$exist)
+                                                        <a href="{{ route('book.wish', $item->id) }}" type="button" class="add-to-cart" data-product-tile="add-to-cart" data-id="{{ $item->id }}">Add to Wishlist</a>
                                                     @else
-                                                        <a href="{{ route('wishlist') }}" type="button" class="add-to-cart" data-product-tile="add-to-cart" data-id="{{ $item->id }}">Added to Wishlist</a>
+                                                        <a href="{{ route('wishlist') }}" type="button" class="add-to-cart" data-product-tile="add-to-cart">Added to Wishlist</a>
                                                     @endif
                                                 @endif
                                             @endauth
@@ -194,11 +200,25 @@
                             <div class="row">
                                 
                                 @foreach ($popular as $key => $item)
+                                    @php
+                                        $exist = App\Models\UserBook::where('id_user', $id_user)
+                                            ->where('id_book', $item->id)
+                                            ->where('wish', true)
+                                            ->first();
+                                    @endphp
                                     <div class="col-md-3">
                                         <div class="product-item">
                                             <figure class="product-style">
                                                 <a href="{{ route('book.page', $item->id) }}"><img src="{{ asset('assets/files/image/' . $item->cover) }}" alt="books" class="product-item" style="aspect-ratio: 3/4; border-radius: .25rem 0 0 .25rem"></a>
-                                                <a href="{{ route('wishlist') }}" type="button" class="add-to-cart" data-product-tile="add-to-cart" data-id="{{ $item->id }}">Add to Wishlist</a>
+                                                @auth
+                                                    @if(Auth::user()->role === 'user')
+                                                        @if (!$exist)
+                                                            <a href="{{ route('book.wish', $item->id) }}" type="button" class="add-to-cart" data-product-tile="add-to-cart" data-id="{{ $item->id }}">Add to Wishlist</a>
+                                                        @else
+                                                            <a href="{{ route('wishlist') }}" type="button" class="add-to-cart" data-product-tile="add-to-cart">Added to Wishlist</a>
+                                                        @endif
+                                                    @endif
+                                                @endauth
                                             </figure>
                                             <figcaption>
                                                 <h3>{{ $item->title }}</h3>
@@ -688,34 +708,33 @@
 @endpush
 
 @push('customScript')
-    {{-- <script>
-        $(document).ready(function() {
-            $('.add-to-cart, .added-to-cart').click(function() {
-                var button = $(this);
-                var id = button.data('id');
-                var url = "{{ route('book.wish', ':id') }}";
-                url = url.replace(':id', id);
+    <script>
+        // $(document).ready(function() {
+            
+        //     $('.add-to-cart').click(function() {
+        //         var button = $(this);
+        //         var id = button.data('id');
+        //         var url = "{{ route('book.wish', ':id') }}";
+        //         url = url.replace(':id', id);
 
-                $.ajax({
-                    url: url,
-                    type: 'PATCH',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        id: id
-                    },
-                    success: function(response) {
-                        if (button.hasClass('hero-btn')) {
-                            button.removeClass('hero-btn btn btn-sm btn-secondary btn-icon d-flex align-items-center').addClass('unhero-btn btn btn-sm btn-info btn-icon d-flex align-items-center');
-                        } else {
-                            button.removeClass('unhero-btn btn btn-sm btn-info btn-icon d-flex align-items-center').addClass('hero-btn btn btn-sm btn-secondary btn-icon d-flex align-items-center');
-                        }
-                    },
-                    error: function(xhr) {
-                        var error = JSON.parse(xhr.responseText);
-                        alert(error.message);
-                    }
-                });
-            });
-        });
-    </script> --}}
+        //         $.ajax({
+        //             url: url,
+        //             type: 'PATCH',
+        //             data: {
+        //                 _token: '{{ csrf_token() }}',
+        //                 id: id
+        //             },
+        //             success: function(response) {
+        //                 if (button.hasClass('add-to-cart')) {
+        //                     button.text("Added to Wishlist");
+        //                 }
+        //             },
+        //             error: function(xhr) {
+        //                 var error = JSON.parse(xhr.responseText);
+        //                 alert(error.message);
+        //             }
+        //         });
+        //     });
+        // });
+    </script>
 @endpush
