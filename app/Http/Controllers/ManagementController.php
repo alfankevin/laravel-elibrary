@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
+use App\Models\Book;
 use App\Exports\BookExport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -31,6 +31,39 @@ class ManagementController extends Controller
         return Excel::download(new BookExport, 'books.xlsx');
     }
 
+    public function billboard($id)
+    {
+        $book = Book::findorfail($id);
+
+        if ($book->hero) {
+            $book->hero = false;
+        } else {
+            $book->hero = true;
+        }
+
+        $book->save();
+
+        return response()->json(['message' => 'Success']);
+    }
+
+    public function featured($id)
+    {
+        $book = Book::findorfail($id);
+
+        if ($book->feat) {
+            $book->feat = false;
+        } else {
+            $featCount = Book::where('feat', true)->count();
+            if ($featCount >= 4) {
+                return response()->json(['message' => 'Only 4 featured book'], 422);
+            }
+            $book->feat = true;
+        }
+
+        $book->save();
+
+        return response()->json(['message' => 'Success']);
+    }
 
     /**
      * Show the form for creating a new resource.

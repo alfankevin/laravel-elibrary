@@ -12,7 +12,7 @@
 
                     <div class="main-slider pattern-overlay">
                         
-                        @foreach ($banner as $key => $item)
+                        @foreach ($billboard as $key => $item)
                             <div class="slider-item">
                                 <div class="banner-content">
                                     <h2 class="banner-title text-capitalize">{{ $item->title }}</h2>

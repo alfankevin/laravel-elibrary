@@ -297,6 +297,7 @@
 
 @push('customScript')
     <script>
+        // Passing data
         $(document).on("click", ".edit", function() {
             var id = $(this).data('id');
             var cover = $(this).data('cover');
@@ -318,7 +319,8 @@
             $("#quantity2").val(quantity);
             $("#file2").val(file);
         });
-
+    </script>
+    <script>
         // Image Preview
         function displayInputImage(input, preview) {
             if (input.files && input.files[0]) {
@@ -345,7 +347,6 @@
             displayInputImage(this, previewImage2);
         });
 
-        // Handle initial preview display
         if (inputImage1.files[0]) {
             displayInputImage(inputImage1, previewImage1);
         }
@@ -353,7 +354,8 @@
         if (inputImage2.files[0]) {
             displayInputImage(inputImage2, previewImage2);
         }
-
+    </script>
+    <script>
         // Reset createForm
         function resetForm() {
             document.getElementById("createForm").reset();

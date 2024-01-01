@@ -14,8 +14,8 @@ class MainController extends Controller
      */
     public function index()
     {
-        $banner = Book::orderByDesc('id')->take(2)->get();
-        $featured = Book::orderByDesc('id')->take(4)->get();
+        $billboard = Book::where('hero', 1)->orderByDesc('id')->get();
+        $featured = Book::where('feat', 1)->orderByDesc('id')->get();
         $best = Book::where('quantity', Book::max('quantity'))->first();
         $popular = DB::select('
             SELECT book.*, category.category
@@ -26,7 +26,7 @@ class MainController extends Controller
             LIMIT 8;
         ');
         
-        return view('main.main', compact('banner', 'featured', 'best', 'popular'));
+        return view('main.main', compact('billboard', 'featured', 'best', 'popular'));
     }
 
     public function booklist(Request $request)

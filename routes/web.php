@@ -37,5 +37,7 @@ Route::middleware(['auth', 'admin'])->group(function(){
         Route::post('/book/edit', [BookController::class, 'update'])->name('book.edit');
         Route::post('/category/edit', [CategoryController::class, 'update'])->name('category.edit');
         Route::get('/book-export', [ManagementController::class, 'export'])->name('book.export');
+        Route::patch('/feat/{id}', [ManagementController::class, 'featured'])->name('book.feat');
+        Route::patch('/hero/{id}', [ManagementController::class, 'billboard'])->name('book.hero');
     });
 });

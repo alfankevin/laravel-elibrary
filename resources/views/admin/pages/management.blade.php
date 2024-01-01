@@ -47,24 +47,23 @@
                                                 <td>{{ $item->category }}</td>
                                                 <td>{{ $item->description }}</td>
                                                 <td>{{ $item->quantity }}</td>
-                                                <td>{{ $item->file }}</td>
+                                                <td><a href="{{ route('book.file', $item->id) }}" class="file-item">{{ $item->file }}</a></td>
                                                 <td class="text-right">
                                                     <div class="d-flex justify-content-end">
-                                                        <button type="button" data-toggle="modal" data-target="#update" data-id="{{ $item->id }}"
-                                                            data-cover="{{ $item->cover }}" data-title="{{ $item->title }}" data-author="{{ $item->author }}"
-                                                            data-category="{{ $item->id }}" data-description="{{ $item->description }}"
-                                                            data-quantity="{{ $item->quantity }}" data-file="{{ $item->file }}"
-                                                            class="btn btn-sm btn-warning btn-icon d-flex align-items-center ml-2 mr-2 edit">
-                                                            <span><i class="fas fa-edit"></i></span>&nbsp;Edit
-                                                        </button>
-                                                        <form action="{{ route('book.destroy', $item->id) }}"
-                                                            method="POST">
-                                                            <input type="hidden" name="_method" value="DELETE">
-                                                            <input type="hidden" name="_token"
-                                                                value="{{ csrf_token() }}">
-                                                            <button class="btn btn-sm btn-danger btn-icon confirm-delete d-flex align-items-center">
-                                                            <span><i class="fas fa-times"></i></span>&nbsp;Delete</button>      
-                                                        </form>
+                                                        @if ($item->hero)
+                                                            <button class="unhero-btn btn btn-sm btn-info btn-icon d-flex align-items-center mr-2" data-id="{{ $item->id }}">
+                                                            <span><i class="fas fa-eye"></i></span>&nbsp;Hero</button>
+                                                        @else
+                                                            <button class="hero-btn btn btn-sm btn-secondary btn-icon d-flex align-items-center mr-2" data-id="{{ $item->id }}">
+                                                            <span><i class="fas fa-eye"></i></span>&nbsp;Hero</button>
+                                                        @endif
+                                                        @if ($item->feat)
+                                                            <button class="unfeat-btn btn btn-sm btn-success btn-icon d-flex align-items-center" data-id="{{ $item->id }}">
+                                                            <span><i class="fas fa-eye"></i></span>&nbsp;Feat</button>
+                                                        @else
+                                                            <button class="feat-btn btn btn-sm btn-secondary btn-icon d-flex align-items-center" data-id="{{ $item->id }}">
+                                                            <span><i class="fas fa-eye"></i></span>&nbsp;Feat</button>
+                                                        @endif
                                                     </div>
                                                 </td>
                                             </tr>
@@ -81,29 +80,71 @@
 @endsection
 
 @push('customScript')
+    <script>
+        $(document).ready(function() {
+            $('.hero-btn, .unhero-btn').click(function() {
+                var button = $(this);
+                var id = button.data('id');
+                var url = "{{ route('book.hero', ':id') }}";
+                url = url.replace(':id', id);
+
+                $.ajax({
+                    url: url,
+                    type: 'PATCH',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        id: id
+                    },
+                    success: function(response) {
+                        if (button.hasClass('hero-btn')) {
+                            button.removeClass('hero-btn btn btn-sm btn-secondary btn-icon d-flex align-items-center').addClass('unhero-btn btn btn-sm btn-info btn-icon d-flex align-items-center');
+                        } else {
+                            button.removeClass('unhero-btn btn btn-sm btn-info btn-icon d-flex align-items-center').addClass('hero-btn btn btn-sm btn-secondary btn-icon d-flex align-items-center');
+                        }
+                    },
+                    error: function(xhr) {
+                        var error = JSON.parse(xhr.responseText);
+                        alert(error.message);
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.feat-btn, .unfeat-btn').click(function() {
+                var button = $(this);
+                var id = button.data('id');
+                var url = "{{ route('book.feat', ':id') }}";
+                url = url.replace(':id', id);
+
+                $.ajax({
+                    url: url,
+                    type: 'PATCH',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        id: id
+                    },
+                    success: function(response) {
+                        if (button.hasClass('feat-btn')) {
+                            button.removeClass('feat-btn btn btn-sm btn-secondary btn-icon d-flex align-items-center').addClass('unfeat-btn btn btn-sm btn-success btn-icon d-flex align-items-center');
+                        } else {
+                            button.removeClass('unfeat-btn btn btn-sm btn-success btn-icon d-flex align-items-center').addClass('feat-btn btn btn-sm btn-secondary btn-icon d-flex align-items-center');
+                        }
+                    },
+                    error: function(xhr) {
+                        var error = JSON.parse(xhr.responseText);
+                        alert(error.message);
+                    }
+                });
+            });
+        });
+    </script>
     <script src="/assets/js/select2.min.js"></script>
 @endpush
 
 @push('customStyle')
     <style>
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-        input[type=number] {
-            -moz-appearance: textfield;
-        }
-        textarea {
-            resize: none;
-        }
-        .absolute {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-        }
         .card-primary {
             background-color: #F3F2EC !important;
         }
@@ -116,31 +157,10 @@
             border-radius: .25rem 0 0 .25rem;
             z-index: 2;
         }
-        .modal-dialog {
-            max-width: 750px;
-        }
-        .cover-parent {
-            height: 100%;
-            width: 100%;
-            position: relative;
-        }
-        .cover-parent > * {
-            width: 100%;
-            border-radius: .25rem;
-        }
-        .cover-text {
-            height: inherit !important;
+        .file-item {
             color: inherit;
-            z-index: 1;
         }
-        .cover-input, .file-input {
-            height: inherit !important;
-            opacity: 0;
-            cursor: pointer;
-            z-index: 3;
-        }
-        .file-parent {
-            position: relative;
+        .file-item:hover {
             color: inherit;
         }
     </style>
