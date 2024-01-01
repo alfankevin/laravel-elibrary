@@ -19,7 +19,7 @@
 
                       <div class="col-md-6">
                           <div class="product-entry">
-                              <h2 class="section-title divider">Most Popular Book</h2>
+                              <h2 class="section-title divider">Today's Book</h2>
 
                               <div class="products-content">
                                   <div class="author-name text-capitalize">By {{ $book->author }}</div>
