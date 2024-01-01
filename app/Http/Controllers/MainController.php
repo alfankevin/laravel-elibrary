@@ -14,7 +14,10 @@ class MainController extends Controller
      */
     public function index()
     {
-        $book = DB::select('
+        $banner = Book::orderByDesc('id')->take(2)->get();
+        $featured = Book::orderByDesc('id')->take(4)->get();
+        $best = Book::where('quantity', Book::max('quantity'))->first();
+        $popular = DB::select('
             SELECT book.*, category.category
             FROM book
             INNER JOIN category
@@ -22,11 +25,8 @@ class MainController extends Controller
             ORDER BY book.id ASC
             LIMIT 8;
         ');
-        $banner = Book::orderByDesc('id')->take(2)->get();
-        $featured = Book::orderByDesc('id')->take(4)->get();
-        $popular = Book::where('quantity', Book::max('quantity'))->get();
         
-        return view('main.main', compact('book', 'banner', 'featured', 'popular'));
+        return view('main.main', compact('banner', 'featured', 'best', 'popular'));
     }
 
     public function booklist()
@@ -63,7 +63,19 @@ class MainController extends Controller
     public function page($id)
     {
         $book = Book::findOrFail($id);
-        return view('main.pages.page', ['book' => $book]);
+        $popular = DB::select('
+            SELECT book.*, category.category
+            FROM book
+            INNER JOIN category
+            ON book.id_category = category.id
+            ORDER BY book.id ASC
+            LIMIT 8;
+        ');
+        
+        return view('main.pages.page', [
+            'book' => $book,
+            'popular' => $popular,
+        ]);
     }
 
     public function show($id)

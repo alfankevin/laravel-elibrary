@@ -64,7 +64,7 @@
 
         <div class="col-md-2">
           <div class="main-logo">
-            <a href="#"><img src="assets/img/main/main-logo.png" alt="logo"></a>
+            <a href="/"><img src="/assets/img/main/main-logo.png" alt="logo"></a>
           </div>
 
         </div>

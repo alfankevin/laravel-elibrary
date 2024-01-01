@@ -22,6 +22,8 @@
   <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/main/style.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ asset('assets/icomoon/icomoon.css') }}">
 
+	@stack('customStyle')
+
 </head>
 
 <body data-bs-spy="scroll" data-bs-target="#header" tabindex="0">
@@ -39,7 +41,7 @@
 
 						<div class="col-md-5">
 							<figure>
-								<img src="assets/img/main/device.png" alt="phone" class="single-image">
+								<img src="/assets/img/main/device.png" alt="phone" class="single-image">
 							</figure>
 						</div>
 
@@ -50,8 +52,8 @@
 									liberolectus nonet psryroin. Amet sed lorem posuere sit iaculis amet, ac urna.
 									Adipiscing fames semper erat ac in suspendisse iaculis.</p>
 								<div class="google-app">
-									<img src="assets/img/main/google-play.jpg" alt="google play">
-									<img src="assets/img/main/app-store.jpg" alt="app store">
+									<img src="/assets/img/main/google-play.jpg" alt="google play">
+									<img src="/assets/img/main/app-store.jpg" alt="app store">
 								</div>
 							</div>
 						</div>
