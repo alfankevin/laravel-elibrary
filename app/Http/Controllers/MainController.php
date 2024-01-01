@@ -29,9 +29,17 @@ class MainController extends Controller
         return view('main.main', compact('banner', 'featured', 'best', 'popular'));
     }
 
-    public function booklist()
+    public function booklist(Request $request)
     {
-        $book = Book::orderByDesc('id')->get();
+        $search = $request->input('search');
+
+        $book = $search 
+            ? Book::where('title', 'like', '%'.$search.'%')
+                   ->orWhere('author', 'like', '%'.$search.'%')
+                   ->orderByDesc('id')
+                   ->get()
+            : Book::orderByDesc('id')->get();
+    
         return view('main.pages.booklist', compact('book'));
     }
 

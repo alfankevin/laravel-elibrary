@@ -18,8 +18,8 @@
         <div class="inner-content">
             <h2 class="section-title divider">Quote of the day</h2>
             <blockquote data-aos="fade-up">
-                <q>“The more that you read, the more things you will know. The more that you learn, the more places
-                    you’ll go.”</q>
+                <q>The more that you read, the more things you will know. The more that you learn, the more places
+                    you’ll go.</q>
                 <div class="author-name">Dr. Seuss</div>
             </blockquote>
         </div>
@@ -32,8 +32,19 @@
           width: 75%;
           aspect-ratio: 3/4;
         }
+        .section-header {
+            width: 75%;
+        }
+        .section-header .section-title::before,
+        .section-header .section-title::after {
+            border-color: #C5A992;
+            width: 20%;
+        }
         @media (max-width: 600px) {
           .file-frame {
+            width: 100%;
+          }
+          .section-header {
             width: 100%;
           }
         }

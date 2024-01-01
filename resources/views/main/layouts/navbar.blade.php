@@ -44,9 +44,9 @@
                 <a href="#" class="search-button search-toggle" data-selector="#header-wrap">
                   <i class="icon icon-search"></i>
                 </a>
-                <form role="search" method="get" class="search-box">
+                <form action="{{ route('booklist') }}" role="search" method="get" class="search-box">
                   <input class="search-field text search-input" placeholder="Search"
-                    type="search">
+                    type="search" name="search" spellcheck="false" autocomplete="off">
                 </form>
               </div>
             </div>

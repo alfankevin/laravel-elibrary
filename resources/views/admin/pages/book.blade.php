@@ -92,7 +92,7 @@
                             <div class="col-4">
                                 <div class="cover-parent">
                                     <span class="absolute form-control d-flex align-items-center justify-content-center cover-text">Cover</span>
-                                    <img id="cover" class="cover-image" src="{{ asset('assets/img/blank.png') }}" alt="cover" style="width: 100% !important">
+                                    <img id="cover" class="cover-image" src="{{ asset('assets/img/blank.png') }}" alt="cover" style="height: 100%; width: 100%">
                                     <input id="cover-input" name="cover" type="file"
                                         class="cover-input absolute form-control @error('cover') is-invalid @enderror"
                                         value="{{ old('cover') }}">
@@ -204,7 +204,7 @@
                         <div class="row">
                             <div class="col-4">
                                 <div class="cover-parent">
-                                    <img id="cover2" class="cover-image" src="" alt="cover" style="width: 100% !important">
+                                    <img id="cover2" class="cover-image" src="" alt="cover" style="height: 100%; width: 100%">
                                     <input id="cover-input2" name="cover" class="cover-input absolute" type="file" value="{{ old('cover') }}">
                                 </div>
                             </div>

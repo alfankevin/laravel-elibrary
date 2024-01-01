@@ -21,14 +21,14 @@ class BookExport implements FromCollection, WithHeadings, WithStrictNullComparis
     public function headings(): array
     {
         return [
-            'id',
-            'title',
-            'author',
-            'category',
-            'description',
-            'quantity',
-            'file',
-            'cover',
+            'ID',
+            'Title',
+            'Author',
+            'Category',
+            'Description',
+            'Quantity',
+            'File',
+            'Cover',
         ];
     }
 }
