@@ -17,10 +17,10 @@ return new class extends Migration
             $table->foreign('id_book')->references('id')->on('book')->onDelete('cascade');
             $table->unsignedBigInteger('id_user')->default(0);
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
-            $table->boolean('save')->default(false);;
-            $table->boolean('borrow')->default(false);;
-            $table->string('comment', 500);
-            $table->string('review', 500);
+            $table->boolean('wish')->default(false)->nullable();
+            $table->boolean('borrow')->default(false)->nullable();
+            $table->string('comment', 500)->nullable();
+            $table->string('review', 500)->nullable();
             $table->timestamps();
         });
     }

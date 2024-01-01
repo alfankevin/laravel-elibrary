@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\UserBook;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class MainController extends Controller
 {
@@ -17,14 +18,7 @@ class MainController extends Controller
         $billboard = Book::where('hero', 1)->orderByDesc('id')->get();
         $featured = Book::where('feat', 1)->orderByDesc('id')->get();
         $best = Book::where('quantity', Book::max('quantity'))->first();
-        $popular = DB::select('
-            SELECT book.*, category.category
-            FROM book
-            INNER JOIN category
-            ON book.id_category = category.id
-            ORDER BY book.id ASC
-            LIMIT 8;
-        ');
+        $popular = Book::take(8)->get();
         
         return view('main.main', compact('billboard', 'featured', 'best', 'popular'));
     }
@@ -45,8 +39,36 @@ class MainController extends Controller
 
     public function wishlist()
     {
-        $book = Book::orderByDesc('id')->get();
+        $id_user = Auth::id();
+
+        $book = Book::select('book.*')
+            ->join('user_book', 'book.id', '=', 'user_book.id_book')
+            ->join('users', 'user_book.id_user', '=', 'users.id')
+            ->where('user_book.id_user', $id_user)
+            ->where('user_book.wish', true)
+            ->orderByDesc('book.id')
+            ->get();
+
         return view('main.pages.wishlist', compact('book'));
+    }
+
+    public function wish($id_user, $id_book)
+    {
+        $table = UserBook::where('id_user', $id_user)
+            ->where('id_book', $id_book)
+            ->where('wish', true)
+            ->first();
+
+        if (!$table) {
+            $data = new UserBook();
+            $data->id_user = $id_user;
+            $data->id_book = $id_book;
+            $data->wish = true;
+            $data->save();
+            return redirect()->route('wishlist');
+        } else {
+            return redirect()->route('index');
+        }
     }
 
     /**
@@ -71,14 +93,7 @@ class MainController extends Controller
     public function page($id)
     {
         $book = Book::findOrFail($id);
-        $popular = DB::select('
-            SELECT book.*, category.category
-            FROM book
-            INNER JOIN category
-            ON book.id_category = category.id
-            ORDER BY book.id ASC
-            LIMIT 8;
-        ');
+        $popular = Book::take(8)->get();
         
         return view('main.pages.page', [
             'book' => $book,

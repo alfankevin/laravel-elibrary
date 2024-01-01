@@ -18,15 +18,19 @@ use App\Http\Controllers\ManagementController;
 |
 */
 
-Route::resource('/', MainController::class);
-Route::get('/booklist', [MainController::class, 'booklist'])->name('booklist');
-Route::get('/wishlist', [MainController::class, 'wishlist'])->name('wishlist');
-Route::get('/book/{id}', [MainController::class, 'page'])->name('book.page');
-Route::get('/book/{id}/pdf', [MainController::class, 'show'])->name('book.file');
-
 Route::get('/login', function () {
     return view('admin.auth.login');
 })->name('login');
+
+Route::resource('/', MainController::class);
+Route::get('/booklist', [MainController::class, 'booklist'])->name('booklist');
+Route::get('/book/{id}', [MainController::class, 'page'])->name('book.page');
+
+Route::middleware(['auth'])->group(function(){
+    Route::get('/wishlist', [MainController::class, 'wishlist'])->name('wishlist');
+    Route::get('/book/{id}/pdf', [MainController::class, 'show'])->name('book.file');
+    Route::get('/wish/{id_user}/{id_book}', [MainController::class, 'wish'])->name('book.wish');
+});
 
 Route::middleware(['auth', 'admin'])->group(function(){
     Route::prefix('admin')->group(function () {

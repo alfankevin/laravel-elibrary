@@ -25,9 +25,7 @@
                                                 <a href="{{ route('book.page', $item->id) }}"><img src="{{ asset('assets/files/image/' . $item->cover) }}"
                                                         alt="books" class="product-item"
                                                         style="aspect-ratio: 3/4; border-radius: .25rem 0 0 .25rem"></a>
-                                                <button type="button" class="add-to-cart"
-                                                    data-product-tile="add-to-cart">Add to
-                                                    Wishlist</button>
+                                                <a href="{{ route('wishlist') }}" type="button" class="add-to-cart" data-product-tile="add-to-cart" data-id="{{ $item->id }}">Add to Wishlist</a>
                                             </figure>
                                             <figcaption>
                                                 <h3>{{ $item->title }}</h3>

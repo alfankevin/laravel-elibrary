@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBookRequest;
@@ -17,14 +16,13 @@ class BookController extends Controller
      */
     public function index()
     {
-        $book = DB::select('
-            SELECT book.*, category.category
-            FROM book
-            INNER JOIN category
-            ON book.id_category = category.id
-            ORDER BY book.id DESC;
-        ');
-        $category = Category::orderByRaw("SUBSTRING(category, 1, 1)")->orderBy('category')->get(); // Sort by alphabet
+        $book = Book::select('book.*', 'category.category')
+            ->join('category', 'book.id_category', '=', 'category.id')
+            ->orderByDesc('book.id')
+            ->get();
+        $category = Category::orderByRaw("SUBSTRING(category, 1, 1)")
+            ->orderBy('category')
+            ->get(); // Sort by alphabet
     
         return view('admin.pages.book', compact('book', 'category'));
     }
@@ -98,13 +96,13 @@ class BookController extends Controller
         $quantity = $request['quantity'];
 
         Book::where('id', $id_book)
-                ->update([
-                    'id_category' => $id_category,
-                    'title' => $title,
-                    'author' => $author,
-                    'description' => $description,
-                    'quantity' => $quantity,
-                ]);
+            ->update([
+                'id_category' => $id_category,
+                'title' => $title,
+                'author' => $author,
+                'description' => $description,
+                'quantity' => $quantity,
+            ]);
 
         $book = Book::findorfail($id_book);
         if ($request->hasFile('cover')) {

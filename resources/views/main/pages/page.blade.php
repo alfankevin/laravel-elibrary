@@ -26,8 +26,11 @@
                                   <h3 class="item-title text-capitalize">{{ $book->title }}</h3>
                                   <p>{{ $book->description }}</p>
                                   <div class="btn-wrap">
-                                      <a href="{{ route('book.file', $book->id) }}" class="btn-accent-arrow">read it now <i
-                                              class="icon icon-ns-arrow-right"></i></a>
+                                    @guest
+                                        <a href="{{ route('login') }}" class="btn-accent-arrow">read it now <i class="icon icon-ns-arrow-right"></i></a>
+                                    @else
+                                        <a href="{{ route('book.file', $book->id) }}" class="btn-accent-arrow">read it now <i class="icon icon-ns-arrow-right"></i></a>
+                                    @endguest
                                   </div>
                               </div>
 
@@ -73,9 +76,7 @@
                                         <div class="product-item">
                                             <figure class="product-style">
                                                 <a href="{{ route('book.page', $item->id) }}"><img src="{{ asset('assets/files/image/' . $item->cover) }}" alt="books" class="product-item" style="aspect-ratio: 3/4; border-radius: .25rem 0 0 .25rem"></a>
-                                                <button type="button" class="add-to-cart"
-                                                    data-product-tile="add-to-cart">Add to
-                                                    Wishlist</button>
+                                                <a href="{{ route('wishlist') }}" type="button" class="add-to-cart" data-product-tile="add-to-cart" data-id="{{ $item->id }}">Add to Wishlist</a>
                                             </figure>
                                             <figcaption>
                                                 <h3>{{ $item->title }}</h3>
