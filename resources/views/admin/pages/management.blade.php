@@ -41,7 +41,7 @@
                                         @foreach ($book as $key => $item)
                                             <tr>
                                                 <td>{{ $key + 1 }}</td>
-                                                <td><img class="cover-image" src="{{ asset($item->cover) }}" alt="cover" height="150"></td>
+                                                <td><img class="cover-image" src="{{ asset('assets/files/image/' . $item->cover) }}" alt="cover" height="150"></td>
                                                 <td>{{ $item->title }}</td>
                                                 <td>{{ $item->author }}</td>
                                                 <td>{{ $item->category }}</td>

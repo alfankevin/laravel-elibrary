@@ -41,13 +41,13 @@
                                         @foreach ($book as $key => $item)
                                             <tr>
                                                 <td>{{ $key + 1 }}</td>
-                                                <td><img class="cover-image" src="{{ asset($item->cover) }}" alt="cover" height="150"></td>
+                                                <td><img class="cover-image" src="{{ asset('assets/files/image/' . $item->cover) }}" alt="cover" height="150"></td>
                                                 <td class="text-capitalize">{{ $item->title }}</td>
                                                 <td class="text-capitalize">{{ $item->author }}</td>
                                                 <td class="text-capitalize">{{ $item->category }}</td>
                                                 <td>{{ $item->description }}</td>
                                                 <td>{{ $item->quantity }}</td>
-                                                <td>{{ $item->file }}</td>
+                                                <td><a href="/" class="file-item">{{ $item->file }}</a></td>
                                                 <td class="text-right">
                                                     <div class="d-flex justify-content-end">
                                                         <button type="button" data-toggle="modal" data-target="#update" data-id="{{ $item->id }}"
@@ -169,7 +169,7 @@
                                     <div class="col-6" style="padding-left: 12.5px">
                                         <div class="form-group m-0">
                                             <span class="form-control file-parent">File
-                                                <input type="text" class="absolute file-input form-control @error('file') is-invalid @enderror"
+                                                <input type="file" class="absolute file-input form-control @error('file') is-invalid @enderror"
                                                     id="file" name="file" spellcheck="false" autocomplete="off" placeholder="File" value="file">
                                             </span>
                                             @error('file')
@@ -271,7 +271,7 @@
                                     <div class="col-6" style="padding-left: 12.5px">
                                         <div class="form-group m-0">
                                             <span class="form-control file-parent">File
-                                                <input type="text" class="absolute file-input form-control @error('file') is-invalid @enderror"
+                                                <input type="file" class="absolute file-input form-control @error('file') is-invalid @enderror"
                                                     id="file2" name="file" spellcheck="false" autocomplete="off" placeholder="File">
                                             </span>
                                             @error('file')
@@ -310,7 +310,7 @@
 
             $("#id").val(id);
             $("#cover").val(cover);
-            $("#cover2").attr("src", "/" + cover2);
+            $("#cover2").attr("src", "/assets/files/image/" + cover2);
             $("#title2").val(title);
             $("#author2").val(author);
             $('#category2').val(category).trigger('change');
@@ -420,6 +420,12 @@
         }
         .file-parent {
             position: relative;
+            color: inherit;
+        }
+        .file-item {
+            color: inherit;
+        }
+        .file-item:hover {
             color: inherit;
         }
     </style>

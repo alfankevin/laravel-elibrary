@@ -24,7 +24,8 @@ class BookController extends Controller
             ON book.id_category = category.id_category
             ORDER BY book.id DESC;
         ');
-        $category = Category::orderByDesc('id_category')->get();
+        $category = Category::orderByRaw("SUBSTRING(category, 1, 1)")->orderBy('category')->get(); // Sort by alphabet
+    
         return view('admin.pages.book', compact('book', 'category'));
     }
 
@@ -48,6 +49,12 @@ class BookController extends Controller
             $path = 'assets/files/image';
             $cover = $cover->move($path, $coverName);
         }
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $fileName = $file->getClientOriginalName();
+            $path = 'assets/files/pdf';
+            $file = $file->move($path, $fileName);
+        }
 
         Book::create([
             'id_category' => $request['id_category'],
@@ -55,8 +62,8 @@ class BookController extends Controller
             'author' => $request['author'],
             'description' => $request['description'],
             'quantity' => $request['quantity'],
-            'file' => $request['file'],
-            'cover' => $cover,
+            'file' => $fileName,
+            'cover' => $coverName,
         ]);
 
         return redirect()->route('book.index');
@@ -89,7 +96,6 @@ class BookController extends Controller
         $author = $request['author'];
         $description = $request['description'];
         $quantity = $request['quantity'];
-        $file = $request['file'];
 
         Book::where('id', $id_book)
                 ->update([
@@ -98,7 +104,6 @@ class BookController extends Controller
                     'author' => $author,
                     'description' => $description,
                     'quantity' => $quantity,
-                    'file' => $file,
                 ]);
 
         $book = Book::findorfail($id_book);
@@ -113,7 +118,20 @@ class BookController extends Controller
             $coverName = $cover->getClientOriginalName();
             $path = 'assets/files/image/';
             $cover = $cover->move($path, $coverName);
-            $book->cover = $cover;
+            $book->cover = $coverName;
+        }
+        if ($request->hasFile('file')) {
+
+            $path = 'assets/files/pdf/'. $book->file;
+            if(file_exists($path)) {
+                File::delete($path);
+            }
+
+            $file = $request->file('file');
+            $fileName = $file->getClientOriginalName();
+            $path = 'assets/files/pdf/';
+            $file = $file->move($path, $fileName);
+            $book->file = $fileName;
         }
         $book->update();
 
