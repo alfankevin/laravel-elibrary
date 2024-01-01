@@ -21,7 +21,7 @@ class BookController extends Controller
             SELECT book.*, category.category
             FROM book
             INNER JOIN category
-            ON book.id_category = category.id_category
+            ON book.id_category = category.id
             ORDER BY book.id DESC;
         ');
         $category = Category::orderByRaw("SUBSTRING(category, 1, 1)")->orderBy('category')->get(); // Sort by alphabet

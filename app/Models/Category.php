@@ -9,8 +9,7 @@ class Category extends Model
 {
     use HasFactory;
     protected $table = 'category';
-    protected $guarded = ['id_category'];
-    protected $primaryKey = 'id_category';
+    protected $guarded = ['id'];
 
     public function book() {
         return $this->hasMany(Book::class);

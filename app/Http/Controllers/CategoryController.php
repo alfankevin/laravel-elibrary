@@ -14,7 +14,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $category = Category::orderByDesc('id_category')->get();
+        $category = Category::orderByDesc('id')->get();
         return view('admin.pages.category', compact('category'));
     }
 
@@ -58,10 +58,10 @@ class CategoryController extends Controller
      */
     public function update(Request $request)
     {
-        $id_category = $request['id_category'];
+        $id = $request['id'];
         $category = $request['category'];
 
-        Category::where('id_category', $id_category)
+        Category::where('id', $id)
                 ->update(['category' => $category]);
 
         return redirect()->route('category.index');

@@ -1,0 +1,1 @@
+<a href="{{ route('book.file', $book->id) }}">open file</a>

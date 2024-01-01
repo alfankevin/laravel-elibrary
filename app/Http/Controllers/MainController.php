@@ -18,13 +18,14 @@ class MainController extends Controller
             SELECT book.*, category.category
             FROM book
             INNER JOIN category
-            ON book.id_category = category.id_category
+            ON book.id_category = category.id
             ORDER BY book.id ASC
             LIMIT 8;
         ');
         $banner = Book::orderByDesc('id')->take(2)->get();
         $featured = Book::orderByDesc('id')->take(4)->get();
         $popular = Book::where('quantity', Book::max('quantity'))->get();
+        
         return view('main.main', compact('book', 'banner', 'featured', 'popular'));
     }
 
@@ -59,9 +60,16 @@ class MainController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function page($id)
     {
-        //
+        $book = Book::findOrFail($id);
+        return view('main.pages.page', ['book' => $book]);
+    }
+
+    public function show($id)
+    {
+        $book = Book::findOrFail($id);
+        return view('main.pages.file', ['book' => $book]);
     }
 
     /**

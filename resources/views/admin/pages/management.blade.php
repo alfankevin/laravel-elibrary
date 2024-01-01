@@ -52,7 +52,7 @@
                                                     <div class="d-flex justify-content-end">
                                                         <button type="button" data-toggle="modal" data-target="#update" data-id="{{ $item->id }}"
                                                             data-cover="{{ $item->cover }}" data-title="{{ $item->title }}" data-author="{{ $item->author }}"
-                                                            data-category="{{ $item->id_category }}" data-description="{{ $item->description }}"
+                                                            data-category="{{ $item->id }}" data-description="{{ $item->description }}"
                                                             data-quantity="{{ $item->quantity }}" data-file="{{ $item->file }}"
                                                             class="btn btn-sm btn-warning btn-icon d-flex align-items-center ml-2 mr-2 edit">
                                                             <span><i class="fas fa-edit"></i></span>&nbsp;Edit

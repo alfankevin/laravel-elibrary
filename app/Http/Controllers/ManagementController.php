@@ -20,11 +20,10 @@ class ManagementController extends Controller
             SELECT book.*, category.category
             FROM book
             INNER JOIN category
-            ON book.id_category = category.id_category
+            ON book.id_category = category.id
             ORDER BY book.id DESC;
         ');
-        $category = Category::orderByDesc('id_category')->get();
-        return view('admin.pages.management', compact('book', 'category'));
+        return view('admin.pages.management', compact('book'));
     }
 
     public function export()

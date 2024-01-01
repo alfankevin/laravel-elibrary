@@ -13,7 +13,7 @@ class BookExport implements FromCollection, WithHeadings, WithStrictNullComparis
     {
         $data = DB::table('book')
             ->select('book.id', 'book.title', 'book.author', 'category.category', 'book.description', 'book.quantity', 'book.file', 'book.cover')
-            ->leftJoin('category', 'book.id_category', '=', 'category.id_category')
+            ->leftJoin('category', 'book.id_category', '=', 'category.id')
             ->get();
         return $data;
     }

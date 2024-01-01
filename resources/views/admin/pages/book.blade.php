@@ -47,7 +47,7 @@
                                                 <td class="text-capitalize">{{ $item->category }}</td>
                                                 <td>{{ $item->description }}</td>
                                                 <td>{{ $item->quantity }}</td>
-                                                <td><a href="/" class="file-item">{{ $item->file }}</a></td>
+                                                <td><a href="{{ route('book.file', $item->id) }}" class="file-item">{{ $item->file }}</a></td>
                                                 <td class="text-right">
                                                     <div class="d-flex justify-content-end">
                                                         <button type="button" data-toggle="modal" data-target="#update" data-id="{{ $item->id }}"
@@ -133,7 +133,7 @@
                                             name="id_category" value="{{ old('id_category') }}">
                                                 <option value="">Category</option>
                                                 @foreach ($category as $item)
-                                                    <option value="{{ $item->id_category }}" {{ old('id_category') == $item->id_category ? 'selected' : '' }}>
+                                                    <option value="{{ $item->id }}" {{ old('id') == $item->id ? 'selected' : '' }}>
                                                         {{ $item->category }}</option>
                                                 @endforeach
                                             </select>
@@ -237,7 +237,7 @@
                                         <div class="form-group">
                                             <select id="category2" class="form-control select2 @error('id_category') is-invalid @enderror" name="id_category">
                                                 @foreach ($category as $item)
-                                                    <option value="{{ $item->id_category }}">{{ $item->category }}</option>
+                                                    <option value="{{ $item->id }}">{{ $item->category }}</option>
                                                 @endforeach
                                             </select>
                                             @error('id_category')

@@ -39,11 +39,11 @@
                                                 <td class="text-right">
                                                     <div class="d-flex justify-content-end">
                                                         <button type="button" data-toggle="modal" data-target="#update"
-                                                            data-id="{{ $item->id_category }}" data-name="{{ $item->category }}"
+                                                            data-id="{{ $item->id }}" data-name="{{ $item->category }}"
                                                             class="btn btn-sm btn-warning btn-icon d-flex align-items-center ml-2 mr-2 edit">
                                                             <span><i class="fas fa-edit"></i></span>&nbsp;Edit
                                                         </button>
-                                                        <form action="{{ route('category.destroy', $item->id_category) }}"
+                                                        <form action="{{ route('category.destroy', $item->id) }}"
                                                             method="POST">
                                                             <input type="hidden" name="_method" value="DELETE">
                                                             <input type="hidden" name="_token"
@@ -105,7 +105,7 @@
                       @csrf
                       <div class="form-group m-0">
                           <label for="category2">Category Name</label>
-                          <input id="id_category" name="id_category" style="display: none">
+                          <input id="id" name="id" style="display: none">
                           <input type="text" class="form-control @error('category2') is-invalid @enderror"
                               id="category2" name="category" spellcheck="false" autocomplete="off">
                           @error('category2')
@@ -131,7 +131,7 @@
             var id = $(this).data('id');
             var name = $(this).data('name');
 
-            $("#id_category").val(id);
+            $("#id").val(id);
             $("#category2").val(name);
         });
         function resetForm() {
