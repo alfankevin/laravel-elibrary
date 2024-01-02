@@ -18,7 +18,7 @@
                     </ul>
 
                     <div class="tab-content">
-                        <div id="all-genre" data-tab-content class="active">
+                        <div id="category" data-tab-content class="active">
                             <div class="row">
 
                                 @foreach ($book as $key => $item)

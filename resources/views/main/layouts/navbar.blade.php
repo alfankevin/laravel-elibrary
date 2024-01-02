@@ -75,7 +75,7 @@
             <div class="main-menu stellarnav">
               <ul class="menu-list" style="cursor: default">
                 <li class="menu-item {{ request()->is('/') ? 'active' : '' }}"><a href="{{ route('index') }}" class="nav-link">Home</a></li>
-                <li class="menu-item {{ request()->is('booklist') ? 'active' : '' }}"><a href="{{ route('booklist') }}" class="nav-link">Books</a></li>
+                <li class="menu-item {{ request()->is('booklist') || request()->is('booklist/*') ? 'active' : '' }}"><a href="{{ route('booklist') }}" class="nav-link">Books</a></li>
                 @auth
                     @if(Auth::user()->role === 'user')
                       <li class="menu-item {{ request()->is('wishlist') ? 'active' : '' }}"><a href="{{ route('wishlist') }}" class="nav-link">Wishlist</a></li>

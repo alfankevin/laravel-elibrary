@@ -18,7 +18,7 @@
                     </ul>
 
                     <div class="tab-content">
-                        <div id="all-genre" data-tab-content class="active">
+                        <div id="category" data-tab-content class="active">
                             <div class="row">
 
                                 @foreach ($book as $key => $item)
@@ -29,8 +29,7 @@
                                                         alt="books" class="product-item"
                                                         style="aspect-ratio: 3/4; border-radius: .25rem 0 0 .25rem"></a>
                                                 <a href="{{ route('delete.wish', $item->id) }}" type="button" class="add-to-cart"
-                                                    data-product-tile="add-to-cart">Remove from
-                                                    Wishlist</a>
+                                                    data-product-tile="add-to-cart">Remove from Wishlist</a>
                                             </figure>
                                             <figcaption>
                                                 <h3>{{ $item->title }}</h3>

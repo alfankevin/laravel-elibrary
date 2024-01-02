@@ -22,7 +22,6 @@
                             <div class="row">
 
                                 @foreach ($book as $key => $item)
-                                {{ $item->id }}
                                     <div class="col-md-3">
                                         <div class="product-item">
                                             <figure class="product-style">
