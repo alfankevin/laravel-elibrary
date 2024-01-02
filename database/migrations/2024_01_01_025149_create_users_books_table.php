@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('user_book', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_book')->default(0);
-            $table->foreign('id_book')->references('id')->on('book')->onDelete('cascade');
             $table->unsignedBigInteger('id_user')->default(0);
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('id_book')->default(0);
+            $table->foreign('id_book')->references('id')->on('book')->onDelete('cascade');
             $table->boolean('wish')->default(false)->nullable();
             $table->boolean('read')->default(false)->nullable();
             $table->string('review', 500)->nullable();

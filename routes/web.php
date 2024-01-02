@@ -27,7 +27,7 @@ Route::get('/booklist', [MainController::class, 'booklist'])->name('booklist');
 Route::get('/book/{id}', [MainController::class, 'book'])->name('book.page');
 
 Route::middleware(['auth'])->group(function(){
-    Route::get('/book/{id}/pdf', [MainController::class, 'read'])->name('book.read');
+    Route::get('/book/{id}/file', [MainController::class, 'read'])->name('book.read');
     Route::get('/wishlist', [MainController::class, 'wishlist'])->name('wishlist');
     Route::get('/wish/{id}/create', [MainController::class, 'wish'])->name('book.wish');
     Route::get('/wish/{id}/delete', [MainController::class, 'remove'])->name('delete.wish');

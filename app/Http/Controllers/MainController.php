@@ -17,7 +17,10 @@ class MainController extends Controller
     {
         $billboard = Book::where('hero', 1)->orderByDesc('updated_at')->get();
         $featured = Book::where('feat', 1)->orderByDesc('updated_at')->get();
-        $best = Book::orderByDesc('id')->first();
+        $best = Book::select('book.*')
+            ->join('user_book', 'book.id', '=', 'user_book.id_book')
+            ->orderByRaw('(user_book.wish + user_book.read) DESC')
+            ->first();
         $popular = Book::take(8)->get();
         
         return view('main.main', compact('billboard', 'featured', 'best', 'popular'));
@@ -78,7 +81,7 @@ class MainController extends Controller
             $new->id_book = $id;
             $new->wish = true;
             $new->save();
-            
+
             return back();
         } else {
             return redirect()->route('wishlist');
@@ -116,22 +119,26 @@ class MainController extends Controller
     public function read($id)
     {
         $id_user = Auth::id();
+        $role = Auth::user()->role;
         $book = Book::findOrFail($id);
 
-        $exist = UserBook::where('id_user', $id_user)
-            ->where('id_book', $id)
-            ->where('read', true)
-            ->first();
-
-        if (!$exist) {
-            $new = new UserBook();
-            $new->id_user = $id_user;
-            $new->id_book = $id;
-            $new->read = true;
-            $new->save();
-
-            $book->quantity -= 1;
-            $book->save();
+        if ($role === 'user') {
+            $exist = UserBook::where('id_user', $id_user)
+                ->where('role', '=', 'user')
+                ->where('id_book', $id)
+                ->where('read', true)
+                ->first();
+    
+            if (!$exist) {
+                $new = new UserBook();
+                $new->id_user = $id_user;
+                $new->id_book = $id;
+                $new->read = true;
+                $new->save();
+    
+                $book->quantity -= 1;
+                $book->save();
+            }
         }
 
         return view('main.pages.file', ['book' => $book]);
