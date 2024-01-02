@@ -24,16 +24,18 @@ Route::get('/login', function () {
 
 Route::resource('/', MainController::class);
 Route::get('/booklist', [MainController::class, 'booklist'])->name('booklist');
-Route::get('/book/{id}', [MainController::class, 'page'])->name('book.page');
+Route::get('/book/{id}', [MainController::class, 'book'])->name('book.page');
 
 Route::middleware(['auth'])->group(function(){
-    Route::get('/book/{id}/pdf', [MainController::class, 'show'])->name('book.file');
+    Route::get('/book/{id}/pdf', [MainController::class, 'read'])->name('book.read');
     Route::get('/wishlist', [MainController::class, 'wishlist'])->name('wishlist');
     Route::get('/wish/{id}/create', [MainController::class, 'wish'])->name('book.wish');
-    Route::get('/wish/{id}/delete', [MainController::class, 'delete'])->name('delete.wish');
+    Route::get('/wish/{id}/delete', [MainController::class, 'remove'])->name('delete.wish');
+    Route::get('/readlist', [MainController::class, 'readlist'])->name('readlist');
+    Route::get('/read/{id}/delete', [MainController::class, 'return'])->name('delete.read');
 });
 
-Route::middleware(['auth', 'admin'])->group(function(){
+Route::middleware(['auth'])->group(function(){
     Route::prefix('admin')->group(function () {
         Route::resource('dashboard', DashboardController::class);
         Route::resource('book', BookController::class);

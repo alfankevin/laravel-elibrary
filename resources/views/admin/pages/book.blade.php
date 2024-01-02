@@ -47,7 +47,7 @@
                                                 <td class="text-capitalize">{{ $item->category }}</td>
                                                 <td>{{ $item->description }}</td>
                                                 <td>{{ $item->quantity }}</td>
-                                                <td><a href="{{ route('book.file', $item->id) }}" class="file-item">{{ $item->file }}</a></td>
+                                                <td><a href="{{ route('book.read', $item->id) }}" class="file-item">{{ $item->file }}</a></td>
                                                 <td class="text-right">
                                                     <div class="d-flex justify-content-end">
                                                         <button type="button" data-toggle="modal" data-target="#update" data-id="{{ $item->id }}"

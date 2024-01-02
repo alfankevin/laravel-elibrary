@@ -15,9 +15,9 @@ class MainController extends Controller
      */
     public function index()
     {
-        $billboard = Book::where('hero', 1)->orderByDesc('id')->get();
-        $featured = Book::where('feat', 1)->orderByDesc('id')->get();
-        $best = Book::where('quantity', Book::max('quantity'))->first();
+        $billboard = Book::where('hero', 1)->orderByDesc('updated_at')->get();
+        $featured = Book::where('feat', 1)->orderByDesc('updated_at')->get();
+        $best = Book::orderByDesc('id')->first();
         $popular = Book::take(8)->get();
         
         return view('main.main', compact('billboard', 'featured', 'best', 'popular'));
@@ -35,6 +35,17 @@ class MainController extends Controller
             : Book::orderByDesc('id')->get();
     
         return view('main.pages.booklist', compact('book'));
+    }
+
+    public function book($id)
+    {
+        $book = Book::findOrFail($id);
+        $popular = Book::take(8)->get();
+        
+        return view('main.pages.page', [
+            'book' => $book,
+            'popular' => $popular,
+        ]);
     }
 
     public function wishlist()
@@ -73,7 +84,7 @@ class MainController extends Controller
         }
     }
 
-    public function delete($id)
+    public function remove($id)
     {
         $id_user = Auth::id();
 
@@ -84,6 +95,62 @@ class MainController extends Controller
         $exist->delete();
 
         return redirect()->route('wishlist');
+    }
+
+    public function readlist()
+    {
+        $id_user = Auth::id();
+
+        $book = Book::select('book.*')
+            ->join('user_book', 'book.id', '=', 'user_book.id_book')
+            ->join('users', 'user_book.id_user', '=', 'users.id')
+            ->where('user_book.id_user', $id_user)
+            ->where('user_book.read', true)
+            ->orderByDesc('user_book.created_at')
+            ->get();
+
+        return view('main.pages.readlist', compact('book'));
+    }
+    
+    public function read($id)
+    {
+        $id_user = Auth::id();
+        $book = Book::findOrFail($id);
+
+        $exist = UserBook::where('id_user', $id_user)
+            ->where('id_book', $id)
+            ->where('read', true)
+            ->first();
+
+        if (!$exist) {
+            $new = new UserBook();
+            $new->id_user = $id_user;
+            $new->id_book = $id;
+            $new->read = true;
+            $new->save();
+
+            $book->quantity -= 1;
+            $book->save();
+        }
+
+        return view('main.pages.file', ['book' => $book]);
+    }
+
+    public function return($id)
+    {
+        $id_user = Auth::id();
+        $book = Book::findOrFail($id);
+
+        $exist = UserBook::where('id_user', $id_user)
+            ->where('id_book', $id)
+            ->where('read', true)
+            ->first();
+        $exist->delete();
+
+        $book->quantity += 1;
+        $book->save();
+
+        return redirect()->route('readlist');
     }
 
     /**
@@ -105,21 +172,9 @@ class MainController extends Controller
     /**
      * Display the specified resource.
      */
-    public function page($id)
+    public function show(string $id)
     {
-        $book = Book::findOrFail($id);
-        $popular = Book::take(8)->get();
-        
-        return view('main.pages.page', [
-            'book' => $book,
-            'popular' => $popular,
-        ]);
-    }
-
-    public function show($id)
-    {
-        $book = Book::findOrFail($id);
-        return view('main.pages.file', ['book' => $book]);
+        //
     }
 
     /**

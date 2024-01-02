@@ -1,4 +1,3 @@
-
 @extends('main.layouts.app')
 @section('content')
     <section id="book-list" class="bookshelf pb-5 mb-5">
@@ -26,22 +25,8 @@
                                                 <a href="{{ route('book.page', $item->id) }}"><img src="{{ asset('assets/files/image/' . $item->cover) }}"
                                                         alt="books" class="product-item"
                                                         style="aspect-ratio: 3/4; border-radius: .25rem 0 0 .25rem"></a>
-                                                @auth
-                                                    @if(Auth::user()->role === 'user')
-                                                        @php
-                                                            $id_user = Auth::user()->id;
-                                                            $exist = App\Models\UserBook::where('id_user', $id_user)
-                                                                ->where('id_book', $item->id)
-                                                                ->where('wish', true)
-                                                                ->first();
-                                                        @endphp
-                                                        @if (!$exist)
-                                                            <a href="{{ route('book.wish', $item->id) }}" type="button" class="add-to-cart" data-product-tile="add-to-cart" data-id="{{ $item->id }}">Add to Wishlist</a>
-                                                        @else
-                                                            <a href="{{ route('wishlist') }}" type="button" class="add-to-cart" data-product-tile="add-to-cart">Added to Wishlist</a>
-                                                        @endif
-                                                    @endif
-                                                @endauth
+                                                <a href="{{ route('delete.read', $item->id) }}" type="button" class="add-to-cart"
+                                                    data-product-tile="add-to-cart">Return Book</a>
                                             </figure>
                                             <figcaption>
                                                 <h3>{{ $item->title }}</h3>
@@ -162,9 +147,6 @@
                                     <div class="product-item">
                                         <figure class="product-style">
                                             <img src="assets/img/main/tab-item5.jpg" alt="books" class="product-item">
-                                            <button type="button" class="add-to-cart"
-                                                data-product-tile="add-to-cart">Add to
-                                                Wishlist</button>
                                         </figure>
                                         <figcaption>
                                             <h3>Life among the pirates</h3>
@@ -178,9 +160,6 @@
                                     <div class="product-item">
                                         <figure class="product-style">
                                             <img src="assets/img/main/tab-item7.jpg" alt="books" class="product-item">
-                                            <button type="button" class="add-to-cart"
-                                                data-product-tile="add-to-cart">Add to
-                                                Wishlist</button>
                                         </figure>
                                         <figcaption>
                                             <h3>Simple way of piece life</h3>
@@ -198,9 +177,6 @@
                                     <div class="product-item">
                                         <figure class="product-style">
                                             <img src="assets/img/main/tab-item1.jpg" alt="books" class="product-item">
-                                            <button type="button" class="add-to-cart"
-                                                data-product-tile="add-to-cart">Add to
-                                                Wishlist</button>
                                         </figure>
                                         <figcaption>
                                             <h3>Peaceful Enlightment</h3>
@@ -214,9 +190,6 @@
                                     <div class="product-item">
                                         <figure class="product-style">
                                             <img src="assets/img/main/tab-item3.jpg" alt="books" class="product-item">
-                                            <button type="button" class="add-to-cart"
-                                                data-product-tile="add-to-cart">Add to
-                                                Wishlist</button>
                                         </figure>
                                         <figcaption>
                                             <h3>Great travel at desert</h3>
@@ -230,9 +203,6 @@
                                     <div class="product-item">
                                         <figure class="product-style">
                                             <img src="assets/img/main/tab-item5.jpg" alt="books" class="product-item">
-                                            <button type="button" class="add-to-cart"
-                                                data-product-tile="add-to-cart">Add to
-                                                Wishlist</button>
                                         </figure>
                                         <figcaption>
                                             <h3>Life among the pirates</h3>
@@ -246,9 +216,6 @@
                                     <div class="product-item">
                                         <figure class="product-style">
                                             <img src="assets/img/main/tab-item7.jpg" alt="books" class="product-item">
-                                            <button type="button" class="add-to-cart"
-                                                data-product-tile="add-to-cart">Add to
-                                                Wishlist</button>
                                         </figure>
                                         <figcaption>
                                             <h3>Simple way of piece life</h3>
@@ -266,9 +233,6 @@
                                     <div class="product-item">
                                         <figure class="product-style">
                                             <img src="assets/img/main/tab-item5.jpg" alt="books" class="product-item">
-                                            <button type="button" class="add-to-cart"
-                                                data-product-tile="add-to-cart">Add to
-                                                Wishlist</button>
                                         </figure>
                                         <figcaption>
                                             <h3>Life among the pirates</h3>
@@ -282,9 +246,6 @@
                                     <div class="product-item">
                                         <figure class="product-style">
                                             <img src="assets/img/main/tab-item7.jpg" alt="books" class="product-item">
-                                            <button type="button" class="add-to-cart"
-                                                data-product-tile="add-to-cart">Add to
-                                                Wishlist</button>
                                         </figure>
                                         <figcaption>
                                             <h3>Simple way of piece life</h3>
@@ -302,9 +263,6 @@
                                     <div class="product-item">
                                         <figure class="product-style">
                                             <img src="assets/img/main/tab-item5.jpg" alt="books" class="product-item">
-                                            <button type="button" class="add-to-cart"
-                                                data-product-tile="add-to-cart">Add to
-                                                Wishlist</button>
                                         </figure>
                                         <figcaption>
                                             <h3>Life among the pirates</h3>
@@ -318,9 +276,6 @@
                                     <div class="product-item">
                                         <figure class="product-style">
                                             <img src="assets/img/main/tab-item7.jpg" alt="books" class="product-item">
-                                            <button type="button" class="add-to-cart"
-                                                data-product-tile="add-to-cart">Add to
-                                                Wishlist</button>
                                         </figure>
                                         <figcaption>
                                             <h3>Simple way of piece life</h3>
@@ -339,7 +294,7 @@
             </div>
         </div>
     </section>
-
+    
     <section id="quotation" class="align-center pb-5 mb-5">
         <div class="inner-content">
             <h2 class="section-title divider">Quote of the day</h2>

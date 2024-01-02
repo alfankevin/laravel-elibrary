@@ -79,6 +79,7 @@
                 @auth
                     @if(Auth::user()->role === 'user')
                       <li class="menu-item {{ request()->is('wishlist') ? 'active' : '' }}"><a href="{{ route('wishlist') }}" class="nav-link">Wishlist</a></li>
+                      <li class="menu-item {{ request()->is('readlist') ? 'active' : '' }}"><a href="{{ route('readlist') }}" class="nav-link">Readlist</a></li>
                     @endif
                 @endauth
                 <li class="menu-item"><a href="/#featured-books" class="nav-link">Featured</a></li>
