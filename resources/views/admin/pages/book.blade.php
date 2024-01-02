@@ -1,9 +1,3 @@
-@php
-    $category = \App\Models\Category::orderByRaw("SUBSTRING(category, 1, 1)")
-        ->orderBy('category')
-        ->get();
-@endphp
-
 @extends('admin.layouts.app')
 
 @section('content')

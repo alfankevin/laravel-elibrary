@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Category;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 use App\Http\Requests\StoreBookRequest;
 
 class BookController extends Controller
@@ -19,8 +20,11 @@ class BookController extends Controller
             ->join('category', 'book.id_category', '=', 'category.id')
             ->orderByDesc('book.id')
             ->get();
+        $category = Category::orderByRaw("SUBSTRING(category, 1, 1)") // Sort by alphabet
+            ->orderBy('category')
+            ->get();
     
-        return view('admin.pages.book', compact('book'));
+        return view('admin.pages.book', compact('book', 'category'));
     }
 
     /**
