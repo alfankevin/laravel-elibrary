@@ -78,7 +78,8 @@ class MainController extends Controller
             $new->id_book = $id;
             $new->wish = true;
             $new->save();
-            return redirect()->route('wishlist');
+            
+            return back();
         } else {
             return redirect()->route('wishlist');
         }
