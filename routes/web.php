@@ -35,7 +35,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/read/{id}/delete', [MainController::class, 'return'])->name('delete.read');
 });
 
-Route::middleware(['auth'])->group(function(){
+Route::middleware(['auth', 'admin'])->group(function(){
     Route::prefix('admin')->group(function () {
         Route::resource('dashboard', DashboardController::class);
         Route::resource('book', BookController::class);

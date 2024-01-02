@@ -18,8 +18,13 @@ class MainController extends Controller
         $billboard = Book::where('hero', 1)->orderByDesc('updated_at')->get();
         $featured = Book::where('feat', 1)->orderByDesc('updated_at')->get();
         $best = Book::select('book.*')
+            ->selectSub(function ($query) {
+                $query->selectRaw('SUM(user_book.wish = true) + SUM(user_book.read = true)')
+                    ->from('user_book')
+                    ->whereColumn('book.id', 'user_book.id_book');
+            }, 'total')
             ->join('user_book', 'book.id', '=', 'user_book.id_book')
-            ->orderByRaw('(user_book.wish + user_book.read) DESC')
+            ->orderByDesc('total')
             ->first();
         $popular = Book::take(8)->get();
         
