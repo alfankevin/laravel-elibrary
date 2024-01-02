@@ -17,6 +17,7 @@ class MainController extends Controller
     {
         $billboard = Book::where('hero', 1)->orderByDesc('updated_at')->get();
         $featured = Book::where('feat', 1)->orderByDesc('updated_at')->get();
+        $popular = Book::take(8)->get();
         $best = Book::select('book.*')
             ->selectSub(function ($query) {
                 $query->selectRaw('SUM(user_book.wish = true) + SUM(user_book.read = true)')
@@ -26,9 +27,8 @@ class MainController extends Controller
             ->join('user_book', 'book.id', '=', 'user_book.id_book')
             ->orderByDesc('total')
             ->first();
-        $popular = Book::take(8)->get();
         
-        return view('main.main', compact('billboard', 'featured', 'best', 'popular'));
+        return view('main.main', compact('billboard', 'featured', 'popular', 'best'));
     }
 
     public function booklist(Request $request)
@@ -129,7 +129,6 @@ class MainController extends Controller
 
         if ($role === 'user') {
             $exist = UserBook::where('id_user', $id_user)
-                ->where('role', '=', 'user')
                 ->where('id_book', $id)
                 ->where('read', true)
                 ->first();
