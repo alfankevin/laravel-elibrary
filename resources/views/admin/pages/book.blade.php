@@ -1,3 +1,9 @@
+@php
+    $category = \App\Models\Category::orderByRaw("SUBSTRING(category, 1, 1)")
+        ->orderBy('category')
+        ->get();
+@endphp
+
 @extends('admin.layouts.app')
 
 @section('content')
@@ -133,8 +139,7 @@
                                             name="id_category" value="{{ old('id_category') }}">
                                                 <option value="">Category</option>
                                                 @foreach ($category as $item)
-                                                    <option value="{{ $item->id }}" {{ old('id') == $item->id ? 'selected' : '' }}>
-                                                        {{ $item->category }}</option>
+                                                    <option value="{{ $item->id }}" {{ old('id') == $item->id ? 'selected' : '' }}>{{ $item->category }}</option>
                                                 @endforeach
                                             </select>
                                             @error('id_category')

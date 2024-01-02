@@ -23,8 +23,9 @@ Route::get('/login', function () {
 })->name('login');
 
 Route::resource('/', MainController::class);
-Route::get('/booklist', [MainController::class, 'booklist'])->name('booklist');
 Route::get('/book/{id}', [MainController::class, 'book'])->name('book.page');
+Route::get('/booklist', [MainController::class, 'booklist'])->name('booklist');
+Route::get('/booklist/{category}', [MainController::class, 'filter'])->name('book.filter');
 
 Route::middleware(['auth'])->group(function(){
     Route::get('/book/{id}/file', [MainController::class, 'read'])->name('book.read');

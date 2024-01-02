@@ -84,11 +84,13 @@
                 @endauth
                 <li class="menu-item"><a href="/#featured-books" class="nav-link">Featured</a></li>
                 <li class="menu-item"><a href="/#popular-books" class="nav-link">Popular</a></li>
-                <li class="menu-item"><a href="/#latest-blog" class="nav-link">Articles</a></li>
+                @guest
+                  <li class="menu-item"><a href="#" class="nav-link">Articles</a></li>
+                @endguest
                 <li class="menu-item"><a href="#download-app" class="nav-link">Download App</a></li>
                 @auth
                     @if(Auth::user()->role === 'admin')
-                        <li class="menu-item"><a href="{{ route('dashboard.index') }}" class="nav-link btn btn-outline-dark rounded-pill m-0">Manage</a></li>
+                        <li class="menu-item"><a href="{{ route('book.index') }}" class="nav-link btn btn-outline-dark rounded-pill m-0">Manage</a></li>
                     @endif
                 @endauth
               </ul>

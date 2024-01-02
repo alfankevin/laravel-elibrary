@@ -345,10 +345,10 @@ ul li.active a {
   color: #daa556;
 }
 
-ul li:last-child,
+/* ul li:last-child,
 ol li:last-child {
   margin-bottom: 0;
-}
+} */
 
 dl {
   margin-top: 0;
@@ -2417,7 +2417,6 @@ footer#footer {
 
 .product-item .item-price {
   color: #74642F;
-  font-size: 1.2em;
 }
 
 @media screen and (max-width: 768px) {

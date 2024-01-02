@@ -31,6 +31,14 @@ class MainController extends Controller
         return view('main.main', compact('billboard', 'featured', 'popular', 'best'));
     }
 
+    public function book($id)
+    {
+        $book = Book::findOrFail($id);
+        $popular = Book::take(8)->get();
+        
+        return view('main.pages.page', compact('book', 'popular'));
+    }
+
     public function booklist(Request $request)
     {
         $search = $request->input('search');
@@ -45,15 +53,13 @@ class MainController extends Controller
         return view('main.pages.booklist', compact('book'));
     }
 
-    public function book($id)
+    public function filter($category)
     {
-        $book = Book::findOrFail($id);
-        $popular = Book::take(8)->get();
+        $book = Book::join('category', 'book.id_category', '=', 'category.id')
+            ->where('category.category', $category)
+            ->get();
         
-        return view('main.pages.page', [
-            'book' => $book,
-            'popular' => $popular,
-        ]);
+        return view('main.pages.booklist', compact('book'));
     }
 
     public function wishlist()
@@ -145,7 +151,7 @@ class MainController extends Controller
             }
         }
 
-        return view('main.pages.file', ['book' => $book]);
+        return view('main.pages.file', compact('book'));
     }
 
     public function return($id)

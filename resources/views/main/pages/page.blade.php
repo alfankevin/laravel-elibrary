@@ -57,25 +57,30 @@
                         </div>
                         <h2 class="section-title">Popular Books</h2>
                     </div>
-
+                    
                     <ul class="tabs">
-                        <li data-tab-target="#all-genre" class="active tab">All Genre</li>
-                        <li data-tab-target="#business" class="tab">Business</li>
-                        <li data-tab-target="#technology" class="tab">Technology</li>
-                        <li data-tab-target="#romantic" class="tab">Romantic</li>
-                        <li data-tab-target="#adventure" class="tab">Adventure</li>
-                        <li data-tab-target="#fictional" class="tab">Fictional</li>
+                        <li data-tab-target="#category" class="active tab">All Genre</li>
+                        @php
+                            $category = \App\Models\Category::orderByRaw("SUBSTRING(category, 1, 1)")
+                                ->orderBy('category')
+                                ->get();
+                        @endphp
+                        @foreach ($category as $key => $item)
+                            <li class="{{ request()->is('booklist/' . $item->category) ? 'active' : '' }} tab"><a href="{{ url('/booklist', ['id' => $item->category]) }}" style="color: inherit">{{ $item->category }}</a></li>
+                        @endforeach
                     </ul>
 
                     <div class="tab-content">
                         <div id="all-genre" data-tab-content class="active">
                             <div class="row">
-                                
+
                                 @foreach ($popular as $key => $item)
                                     <div class="col-md-3">
                                         <div class="product-item">
                                             <figure class="product-style">
-                                                <a href="{{ route('book.page', $item->id) }}"><img src="{{ asset('assets/files/image/' . $item->cover) }}" alt="books" class="product-item" style="aspect-ratio: 3/4; border-radius: .25rem 0 0 .25rem"></a>
+                                                <a href="{{ route('book.page', $item->id) }}"><img src="{{ asset('assets/files/image/' . $item->cover) }}"
+                                                        alt="books" class="product-item"
+                                                        style="aspect-ratio: 3/4; border-radius: .25rem 0 0 .25rem"></a>
                                                 @auth
                                                     @if(Auth::user()->role === 'user')
                                                         @php
@@ -103,9 +108,7 @@
                                 @endforeach
 
                             </div>
-
                         </div>
-
                     </div>
 
                 </div><!--inner-tabs-->
