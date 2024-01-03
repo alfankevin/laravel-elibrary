@@ -7,9 +7,9 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## How to install
+## How to Install
 
-1. Clone repository
+1. Clone Repository
 
 ```sh
 git clone https://github.com/alfankevin/laravel-elibrary.git && cd laravel-elibrary
@@ -33,19 +33,19 @@ cp .env.example .env
 php artisan key:generate
 ```
 
-5. Migration database
+5. Migrate Database
 
 ```sh
 php artisan migrate:fresh
 ```
 
-6. Seeding database
+6. Seed Database
 
 ```sh
 php artisan db:seed
 ```
 
-7. Run laravel
+7. Run Laravel
 
 ```sh
 php artisan serve
