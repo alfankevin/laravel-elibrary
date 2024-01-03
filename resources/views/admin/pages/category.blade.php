@@ -8,11 +8,6 @@
         <div class="section-body">
             <div class="row">
                 <div class="col-12">
-                    @include('admin.layouts.alert')
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
                     <div class="card card-primary" style="background-color: #F3F2EC">
                         <div class="card-header" style="border-bottom-color: #F3F2EC">
                             <h4>Category List</h4>

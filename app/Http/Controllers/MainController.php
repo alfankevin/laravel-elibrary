@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Category;
 use App\Models\UserBook;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use App\Http\Requests\StoreBookRequest;
 
 class MainController extends Controller
 {
@@ -17,7 +20,7 @@ class MainController extends Controller
     {
         $billboard = Book::where('hero', 1)->orderByDesc('updated_at')->get();
         $featured = Book::where('feat', 1)->orderByDesc('updated_at')->get();
-        $popular = Book::take(8)->get();
+        $popular = Book::where('id_user', 1)->orderByDesc('updated_at')->take(8)->get();
         $best = Book::select('book.*')
             ->selectSub(function ($query) {
                 $query->selectRaw('SUM(user_book.wish = true) + SUM(user_book.read = true)')
@@ -34,7 +37,7 @@ class MainController extends Controller
     public function book($id)
     {
         $book = Book::findOrFail($id);
-        $popular = Book::take(8)->get();
+        $popular = Book::where('id_user', 1)->orderByDesc('updated_at')->take(8)->get();
         
         return view('main.pages.page', compact('book', 'popular'));
     }
@@ -64,12 +67,10 @@ class MainController extends Controller
 
     public function wishlist()
     {
-        $id_user = Auth::id();
-
         $book = Book::select('book.*')
             ->join('user_book', 'book.id', '=', 'user_book.id_book')
             ->join('users', 'user_book.id_user', '=', 'users.id')
-            ->where('user_book.id_user', $id_user)
+            ->where('user_book.id_user', auth()->user()->id)
             ->where('user_book.wish', true)
             ->orderByDesc('user_book.created_at')
             ->get();
@@ -79,16 +80,14 @@ class MainController extends Controller
 
     public function wish($id)
     {
-        $id_user = Auth::id();
-
-        $exist = UserBook::where('id_user', $id_user)
+        $exist = UserBook::where('id_user', auth()->user()->id)
             ->where('id_book', $id)
             ->where('wish', true)
             ->first();
 
         if (!$exist) {
             $new = new UserBook();
-            $new->id_user = $id_user;
+            $new->id_user = auth()->user()->id;
             $new->id_book = $id;
             $new->wish = true;
             $new->save();
@@ -101,9 +100,7 @@ class MainController extends Controller
 
     public function remove($id)
     {
-        $id_user = Auth::id();
-
-        $exist = UserBook::where('id_user', $id_user)
+        $exist = UserBook::where('id_user', auth()->user()->id)
             ->where('id_book', $id)
             ->where('wish', true)
             ->first();
@@ -114,12 +111,10 @@ class MainController extends Controller
 
     public function readlist()
     {
-        $id_user = Auth::id();
-
         $book = Book::select('book.*')
             ->join('user_book', 'book.id', '=', 'user_book.id_book')
             ->join('users', 'user_book.id_user', '=', 'users.id')
-            ->where('user_book.id_user', $id_user)
+            ->where('user_book.id_user', auth()->user()->id)
             ->where('user_book.read', true)
             ->orderByDesc('user_book.created_at')
             ->get();
@@ -129,19 +124,17 @@ class MainController extends Controller
     
     public function read($id)
     {
-        $id_user = Auth::id();
-        $role = Auth::user()->role;
         $book = Book::findOrFail($id);
 
-        if ($role === 'user') {
-            $exist = UserBook::where('id_user', $id_user)
+        if (Auth::user()->role === 'user') {
+            $exist = UserBook::where('id_user', auth()->user()->id)
                 ->where('id_book', $id)
                 ->where('read', true)
                 ->first();
     
             if (!$exist) {
                 $new = new UserBook();
-                $new->id_user = $id_user;
+                $new->id_user = auth()->user()->id;
                 $new->id_book = $id;
                 $new->read = true;
                 $new->save();
@@ -156,10 +149,9 @@ class MainController extends Controller
 
     public function return($id)
     {
-        $id_user = Auth::id();
         $book = Book::findOrFail($id);
 
-        $exist = UserBook::where('id_user', $id_user)
+        $exist = UserBook::where('id_user', auth()->user()->id)
             ->where('id_book', $id)
             ->where('read', true)
             ->first();
@@ -171,20 +163,53 @@ class MainController extends Controller
         return redirect()->route('readlist');
     }
 
+    public function mybook()
+    {
+        $book = Book::where('id_user', auth()->user()->id)->orderByDesc('created_at')->get();
+
+        return view('main.pages.mybook', compact('book'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        //
+        return view('main.pages.upload', [
+            'category' => Category::all()
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreBookRequest $request)
     {
-        //
+        if ($request->hasFile('cover')) {
+            $cover = $request->file('cover');
+            $coverName = $cover->getClientOriginalName();
+            $path = 'assets/files/image';
+            $cover = $cover->move($path, $coverName);
+        }
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $fileName = $file->getClientOriginalName();
+            $path = 'assets/files/pdf';
+            $file = $file->move($path, $fileName);
+        }
+
+        Book::create([
+            'id_user' => auth()->user()->id,
+            'id_category' => $request['id_category'],
+            'title' => $request['title'],
+            'author' => $request['author'],
+            'description' => $request['description'],
+            'quantity' => $request['quantity'],
+            'file' => $fileName,
+            'cover' => $coverName,
+        ]);
+
+        return redirect()->route('mybook');
     }
 
     /**
@@ -198,24 +223,79 @@ class MainController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $book = Book::where('id', $id)->first();
+        $category = Category::all();
+
+        if ($book->id_user == auth()->user()->id) {
+            return view('main.pages.update', compact('book', 'category'));
+        } else {
+            return back();
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $book = Book::findorfail($id);
+
+        $id_category = $request['id_category'];
+        $title = $request['title'];
+        $author = $request['author'];
+        $description = $request['description'];
+        $quantity = $request['quantity'];
+
+        Book::where('id', $id)
+            ->update([
+                'id_category' => $id_category,
+                'title' => $title,
+                'author' => $author,
+                'description' => $description,
+                'quantity' => $quantity,
+            ]);
+
+        if ($request->hasFile('cover')) {
+
+            $path = 'assets/files/image/'. $book->cover;
+            if(file_exists($path)) {
+                File::delete($path);
+            }
+
+            $cover = $request->file('cover');
+            $coverName = $cover->getClientOriginalName();
+            $path = 'assets/files/image/';
+            $cover = $cover->move($path, $coverName);
+            $book->cover = $coverName;
+        }
+        if ($request->hasFile('file')) {
+
+            $path = 'assets/files/pdf/'. $book->file;
+            if(file_exists($path)) {
+                File::delete($path);
+            }
+
+            $file = $request->file('file');
+            $fileName = $file->getClientOriginalName();
+            $path = 'assets/files/pdf/';
+            $file = $file->move($path, $fileName);
+            $book->file = $fileName;
+        }
+        $book->update();
+
+        return redirect()->route('mybook');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $book = Book::findorfail($id);
+        $book->delete();
+        
+        return back();
     }
 }

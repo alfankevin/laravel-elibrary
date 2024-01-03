@@ -2377,8 +2377,13 @@ footer#footer {
   width: 100%;
 }
 
-.product-style a.add-to-cart {
+.product-style a.add-to-cart,
+.product-style button.add-to-cart {
   position: absolute;
+  height: 65px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: #000;
   color: #fff;
   width: 100%;
@@ -2386,7 +2391,6 @@ footer#footer {
   text-transform: uppercase;
   text-align: center;
   font-weight: 600;
-  line-height: 4;
   bottom: 300px;
   bottom: -65px;
   left: 0;
@@ -2394,7 +2398,8 @@ footer#footer {
   transition: 0.3s ease-out;
 }
 
-.product-style:hover a.add-to-cart {
+.product-style:hover a.add-to-cart,
+.product-style:hover button.add-to-cart {
   bottom: 380px;
   bottom: 0;
 }

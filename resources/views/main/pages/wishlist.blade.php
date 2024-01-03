@@ -26,8 +26,7 @@
                                         <div class="product-item">
                                             <figure class="product-style">
                                                 <a href="{{ route('book.page', $item->id) }}"><img src="{{ asset('assets/files/image/' . $item->cover) }}"
-                                                        alt="books" class="product-item"
-                                                        style="aspect-ratio: 3/4; border-radius: .25rem 0 0 .25rem"></a>
+                                                    alt="books" class="product-item" style="aspect-ratio: 3/4; border-radius: .25rem 0 0 .25rem"></a>
                                                 <a href="{{ route('delete.wish', $item->id) }}" type="button" class="add-to-cart"
                                                     data-product-tile="add-to-cart">Remove from Wishlist</a>
                                             </figure>

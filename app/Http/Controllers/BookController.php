@@ -55,6 +55,7 @@ class BookController extends Controller
         }
 
         Book::create([
+            'id_user' => auth()->user()->id,
             'id_category' => $request['id_category'],
             'title' => $request['title'],
             'author' => $request['author'],
@@ -142,6 +143,6 @@ class BookController extends Controller
     public function destroy(Book $book)
     {
         $book->delete();
-        return redirect()->route('book.index');
+        return redirect()->route('mybook');
     }
 }

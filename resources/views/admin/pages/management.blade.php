@@ -8,11 +8,6 @@
         <div class="section-body">
             <div class="row">
                 <div class="col-12">
-                    @include('admin.layouts.alert')
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
                     <div class="card card-primary">
                         <div class="card-header">
                             <h4>Book List</h4>
@@ -140,7 +135,7 @@
             });
         });
     </script>
-    <script src="/assets/js/select2.min.js"></script>
+    <script src="{{ asset('assets/js/select2.min.js') }}"></script>
 @endpush
 
 @push('customStyle')
@@ -164,5 +159,5 @@
             color: inherit;
         }
     </style>
-    <link rel="stylesheet" href="/assets/css/select2.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/select2.min.css') }}">
 @endpush

@@ -15,6 +15,8 @@
     <!-- CSS Libraries -->
     <link rel="stylesheet" href="/assets/css/bootstrap-social.css">
 
+    @stack('customStyle')
+
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/components.css') }}">
@@ -45,6 +47,7 @@
 <script src="{{ asset('assets/js/custom.js') }}"></script>
 
 <!-- Page Specific JS File -->
+@stack('customScript')
 </body>
 
 </html>

@@ -34,6 +34,11 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/wish/{id}/delete', [MainController::class, 'remove'])->name('delete.wish');
     Route::get('/readlist', [MainController::class, 'readlist'])->name('readlist');
     Route::get('/read/{id}/delete', [MainController::class, 'return'])->name('delete.read');
+    Route::get('/mybook', [MainController::class, 'mybook'])->name('mybook');
+    Route::get('/upload/book', [MainController::class, 'create'])->name('mine-upload');
+    Route::get('/update/book/{id}', [MainController::class, 'edit'])->name('mine-edit');
+    Route::put('/update/{id}', [MainController::class, 'update'])->name('mine-update');
+    Route::delete('/delete/{id}', [MainController::class, 'destroy'])->name('mine-delete');
 });
 
 Route::middleware(['auth', 'admin'])->group(function(){

@@ -8,11 +8,6 @@
         <div class="section-body">
             <div class="row">
                 <div class="col-12">
-                    @include('admin.layouts.alert')
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
                     <div class="card card-primary">
                         <div class="card-header">
                             <h4>Book List</h4>
@@ -57,11 +52,9 @@
                                                             class="btn btn-sm btn-warning btn-icon d-flex align-items-center ml-2 mr-2 edit">
                                                             <span><i class="fas fa-edit"></i></span>&nbsp;Edit
                                                         </button>
-                                                        <form action="{{ route('book.destroy', $item->id) }}"
-                                                            method="POST">
+                                                        <form action="{{ route('book.destroy', $item->id) }}" method="POST">
                                                             <input type="hidden" name="_method" value="DELETE">
-                                                            <input type="hidden" name="_token"
-                                                                value="{{ csrf_token() }}">
+                                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                             <button class="btn btn-sm btn-danger btn-icon confirm-delete d-flex align-items-center">
                                                             <span><i class="fas fa-times"></i></span>&nbsp;Delete</button>      
                                                         </form>
@@ -189,7 +182,7 @@
                 </form>
             </div>
         </div>
-    </div>    
+    </div>
     <!-- Modal -->
     <div class="modal fade" id="update" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -248,7 +241,8 @@
                                     </div>
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <textarea id="description2" class="form-control @error('description') is-invalid @enderror" name="description" name="description" placeholder="Description" style="height: 84px"></textarea>
+                                            <textarea id="description2" class="form-control @error('description') is-invalid @enderror" name="description"
+                                                placeholder="Description" style="height: 84px"></textarea>
                                             @error('description')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -361,7 +355,7 @@
             previewImage1.src = "/assets/img/blank.png";
         }
     </script>
-    <script src="/assets/js/select2.min.js"></script>
+    <script src="{{ asset('assets/js/select2.min.js') }}"></script>
 @endpush
 
 @push('customStyle')
@@ -430,5 +424,5 @@
             color: inherit;
         }
     </style>
-    <link rel="stylesheet" href="/assets/css/select2.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/select2.min.css') }}">
 @endpush

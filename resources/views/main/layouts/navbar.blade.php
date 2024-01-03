@@ -77,21 +77,32 @@
                 <li class="menu-item {{ request()->is('/') ? 'active' : '' }}"><a href="{{ route('index') }}" class="nav-link">Home</a></li>
                 <li class="menu-item {{ request()->is('booklist') || request()->is('booklist/*') ? 'active' : '' }}"><a href="{{ route('booklist') }}" class="nav-link">Books</a></li>
                 @auth
-                    @if(Auth::user()->role === 'user')
-                      <li class="menu-item {{ request()->is('wishlist') ? 'active' : '' }}"><a href="{{ route('wishlist') }}" class="nav-link">Wishlist</a></li>
-                      <li class="menu-item {{ request()->is('readlist') ? 'active' : '' }}"><a href="{{ route('readlist') }}" class="nav-link">Readlist</a></li>
-                    @endif
+                  @if(Auth::user()->role === 'user')
+                    <li class="menu-item {{ request()->is('mybook') ? 'active' : '' }}"><a href="{{ route('mybook') }}" class="nav-link">My Book</a></li>
+                    <li class="menu-item {{ request()->is('wishlist') ? 'active' : '' }}"><a href="{{ route('wishlist') }}" class="nav-link">Wishlist</a></li>
+                    <li class="menu-item {{ request()->is('readlist') ? 'active' : '' }}"><a href="{{ route('readlist') }}" class="nav-link">Readlist</a></li>
+                  @endif
                 @endauth
-                <li class="menu-item"><a href="/#featured-books" class="nav-link">Featured</a></li>
-                <li class="menu-item"><a href="/#popular-books" class="nav-link">Popular</a></li>
+                @auth
+                  @if(Auth::user()->role !== 'user')
+                    <li class="menu-item"><a href="/#featured-books" class="nav-link">Featured</a></li>
+                    <li class="menu-item"><a href="/#popular-books" class="nav-link">Popular</a></li>
+                  @endif
+                @endauth
+                @guest
+                  <li class="menu-item"><a href="/#featured-books" class="nav-link">Featured</a></li>
+                  <li class="menu-item"><a href="/#popular-books" class="nav-link">Popular</a></li>
+                @endguest
                 @guest
                   <li class="menu-item"><a href="#" class="nav-link">Articles</a></li>
                 @endguest
                 <li class="menu-item"><a href="#download-app" class="nav-link">Download App</a></li>
                 @auth
-                    @if(Auth::user()->role === 'admin')
-                        <li class="menu-item"><a href="{{ route('book.index') }}" class="nav-link btn btn-outline-dark rounded-pill m-0">Manage</a></li>
-                    @endif
+                  @if(Auth::user()->role === 'admin')
+                      <li class="menu-item"><a href="{{ route('book.index') }}" class="nav-link btn btn-outline-dark rounded-pill m-0">Manage</a></li>
+                  @elseif(Auth::user()->role === 'user')
+                      <li class="menu-item"><a href="{{ route('mine-upload') }}" class="nav-link btn btn-outline-dark rounded-pill m-0">Upload</a></li>
+                  @endif
                 @endauth
               </ul>
 

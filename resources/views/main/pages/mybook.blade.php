@@ -1,6 +1,6 @@
 @extends('main.layouts.app')
 @section('content')
-    <section id="readlist" class="bookshelf pb-5 mb-5">
+    <section id="booklist" class="bookshelf pb-5 mb-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -26,9 +26,13 @@
                                         <div class="product-item">
                                             <figure class="product-style">
                                                 <a href="{{ route('book.page', $item->id) }}"><img src="{{ asset('assets/files/image/' . $item->cover) }}"
-                                                    alt="books" class="product-item" style="aspect-ratio: 3/4; border-radius: .25rem 0 0 .25rem"></a>
-                                                <a href="{{ route('delete.read', $item->id) }}" type="button" class="add-to-cart"
-                                                    data-product-tile="add-to-cart">Return Book</a>
+                                                        alt="books" class="product-item" style="aspect-ratio: 3/4; border-radius: .25rem 0 0 .25rem"></a>
+                                                <a href="{{ route('mine-edit', $item->id) }}" type="button" class="add-to-cart" data-product-tile="add-to-cart" style="width: 50%; margin-right: 50%; border-right: 1px solid #fff">Update</a>
+                                                <form action="{{ route('mine-delete', $item->id) }}" method="POST" class="m-0">
+                                                    <input type="hidden" name="_method" value="DELETE">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                    <button class="add-to-cart" data-product-tile="add-to-cart" style="width: 50%; margin-left: 50%">Delete</button>
+                                                </form>
                                             </figure>
                                             <figcaption>
                                                 <h3>{{ $item->title }}</h3>
