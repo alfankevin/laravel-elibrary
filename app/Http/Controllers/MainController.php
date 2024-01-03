@@ -144,7 +144,7 @@ class MainController extends Controller
             }
 
             return view('main.pages.file', compact('book'));
-        } else if ($book->id_user == Auth::user()->id) {
+        } else if ($book->id_user == Auth::user()->id || Auth::user()->role === 'admin') {
             return view('main.pages.file', compact('book'));
         } else {
             return back();
@@ -179,9 +179,11 @@ class MainController extends Controller
      */
     public function create()
     {
-        return view('main.pages.upload', [
-            'category' => Category::all()
-        ]);
+        $category = Category::orderByRaw("SUBSTRING(category, 1, 1)")
+            ->orderBy('category')
+            ->get();
+
+        return view('main.pages.upload', compact('category'));
     }
 
     /**
@@ -230,7 +232,9 @@ class MainController extends Controller
     public function edit($id)
     {
         $book = Book::where('id', $id)->first();
-        $category = Category::all();
+        $category = Category::orderByRaw("SUBSTRING(category, 1, 1)")
+            ->orderBy('category')
+            ->get();
 
         if ($book->id_user == auth()->user()->id) {
             return view('main.pages.update', compact('book', 'category'));
