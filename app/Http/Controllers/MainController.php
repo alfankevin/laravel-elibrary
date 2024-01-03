@@ -126,7 +126,7 @@ class MainController extends Controller
     {
         $book = Book::findOrFail($id);
 
-        if (Auth::user()->role === 'user') {
+        if (Auth::user()->role === 'user' && $book->quantity > 0 && $book->id_user != Auth::user()->id) {
             $exist = UserBook::where('id_user', auth()->user()->id)
                 ->where('id_book', $id)
                 ->where('read', true)
@@ -142,9 +142,13 @@ class MainController extends Controller
                 $book->quantity -= 1;
                 $book->save();
             }
-        }
 
-        return view('main.pages.file', compact('book'));
+            return view('main.pages.file', compact('book'));
+        } else if ($book->id_user == Auth::user()->id) {
+            return view('main.pages.file', compact('book'));
+        } else {
+            return back();
+        }
     }
 
     public function return($id)

@@ -25,7 +25,7 @@
                                     <div class="col-md-3">
                                         <div class="product-item">
                                             <figure class="product-style">
-                                                <a href="{{ route('book.read', $item->id) }}"><img src="{{ asset('assets/files/image/' . $item->cover) }}"
+                                                <a href="{{ route('book.page', $item->id) }}"><img src="{{ asset('assets/files/image/' . $item->cover) }}"
                                                         alt="books" class="product-item" style="aspect-ratio: 3/4; border-radius: .25rem 0 0 .25rem"></a>
                                                 @auth
                                                     @if(Auth::user()->role === 'user')
