@@ -30,7 +30,7 @@ $("[data-checkboxes]").each(function() {
 
 $("#book").dataTable({
   "columnDefs": [
-    { "sortable": false, "targets": [4] }
+    { "sortable": false, "targets": [8] }
   ],
   "language": {
     "lengthMenu": "Show _MENU_ data",
