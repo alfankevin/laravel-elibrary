@@ -12,7 +12,7 @@
                       <div class="col-md-6">
                           <figure class="products-thumb">
                               <div style="padding: 12.5px">
-                                  <img src="{{ asset('assets/files/image/' . $book->cover) }}" alt="book" class="single-image" style="height: 470px; width 100%; border-radius: .25rem 0 0 .25rem">
+                                  <img src="{{ asset('assets/files/image/' . $book->cover) }}" alt="book" class="single-image" style="height: 470px; width 100%; border-radius: .25rem 0 0 .25rem; aspect-ratio: 3/4">
                               </div>
                           </figure>
                       </div>
